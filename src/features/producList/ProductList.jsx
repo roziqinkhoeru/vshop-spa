@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { addItemToCart } from '../cart/cartSlice';
 import { Loader2Icon, PlusIcon, ServerCrashIcon, StarIcon } from 'lucide-react';
@@ -15,12 +15,23 @@ function ProductList() {
     (state) => state.product
   );
   const dispatch = useDispatch();
+  const [categoryFilter, setCategoryFilter] = useState('all');
+  const [filteredProducts, setFilteredProducts] = useState([]);
 
   const handleAddToCart = (product) => {
     dispatch(addItemToCart(product));
   };
 
-  const handleFilterCategory = (category) => {};
+  const handleFilterCategory = (category) => {
+    setCategoryFilter(category);
+    if (category === 'all') {
+      setFilteredProducts(productItems);
+    } else {
+      setFilteredProducts(
+        productItems.filter((product) => product.category === category)
+      );
+    }
+  };
 
   useEffect(() => {
     const fetchProducts = async () => {
@@ -36,18 +47,30 @@ function ProductList() {
     fetchProducts();
   }, [dispatch]);
 
+  useEffect(() => {
+    setFilteredProducts(productItems);
+  }, [productItems]);
+
   return (
     <>
       <div className="flex items-center mb-5 overflow-x-scroll">
         <button
-          className="whitespace-nowrap bg-gray-100 text-sm text-left w-auto px-4 py-2 rounded-full text-gray-700 font-medium mt-2 mr-2 hover:bg-gray-200 transition duration-300 ease-in-out"
+          className={`whitespace-nowrap border-2 bg-gray-100 text-sm text-left w-auto px-4 py-2 rounded-full text-gray-700 font-medium mt-2 mr-2 transition duration-100 ease-in-out ${
+            categoryFilter === 'all'
+              ? 'border-gray-700 hover:bg-gray-200'
+              : 'border-gray-100 hover:bg-gray-200 hover:border-gray-200'
+          }`}
           type="button"
           onClick={() => handleFilterCategory('all')}>
           All Products
         </button>
         {categories?.map((category) => (
           <button
-            className="capitalize whitespace-nowrap bg-gray-100 text-sm text-left w-auto px-4 py-2 rounded-full text-gray-700 font-medium mt-2 mr-2 hover:bg-gray-200 transition duration-300 ease-in-out"
+            className={`capitalize whitespace-nowrap border-2 bg-gray-100 text-sm text-left w-auto px-4 py-2 rounded-full text-gray-700 font-medium mt-2 mr-2 transition duration-300 ease-in-out ${
+              categoryFilter === category
+                ? 'border-gray-700 hover:bg-gray-200'
+                : 'border-gray-100 hover:bg-gray-200 hover:border-gray-200'
+            }`}
             key={category}
             onClick={() => handleFilterCategory(category)}
             type="button">
@@ -72,11 +95,11 @@ function ProductList() {
             <p className="text-gray-400 font-semibold text-xl mt-1">Error</p>
           </div>
         ) : (
-          <div className="w-full grid grid-cols-4 mobile:grid-cols-12 gap-4">
-            {productItems?.length > 0 ? (
-              productItems?.map((product) => (
+          <div className="w-full grid grid-cols-4 mobile:grid-cols-12 xl:grid-cols-10 gap-4">
+            {filteredProducts?.length > 0 ? (
+              filteredProducts?.map((product) => (
                 <div
-                  className="col-span-2 mobile:col-span-4 w-full flex flex-col justify-between bg-white p-3 rounded-2xl border border-gray-200"
+                  className="col-span-2 mobile:col-span-3 xl:col-span-2 w-full flex flex-col justify-between bg-white p-3 rounded-2xl border border-gray-200"
                   key={product?.id}>
                   <div className="mb-2">
                     <figure className="mb-1 bg-white overflow-hidden rounded-lg p-4 flex items-center justify-center h-32 w-full">
