@@ -3,6 +3,7 @@ import { createSlice } from '@reduxjs/toolkit';
 const initialState = {
   productItems: [],
   categories: ["men's clothing", 'jewelery', 'electronics', "women's clothing"],
+  loading: false,
   error: null,
 };
 
@@ -10,19 +11,22 @@ export const productSlice = createSlice({
   name: 'product',
   initialState,
   reducers: {
-    setProducts: (state, action) => {
+    setProductsStart: (state) => {
+      state.loading = true;
+      state.error = null;
+    },
+    setProductsSuccess: (state, action) => {
+      state.loading = false;
       state.productItems = action.payload;
     },
-    setError: (state, action) => {
+    setProductsError: (state, action) => {
+      state.loading = false;
       state.error = action.payload;
     },
   },
 });
 
-export const { setProducts, setError } = productSlice.actions;
+export const { setProductsStart, setProductsSuccess, setProductsError } =
+  productSlice.actions;
 
 export default productSlice.reducer;
-
-// selector
-export const productsSelector = (state) => state.product.productItems;
-export const categorySelector = (state) => state.product.categories;
