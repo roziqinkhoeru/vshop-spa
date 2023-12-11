@@ -12,9 +12,9 @@ function App() {
         </h1>
         <ProductList />
       </main>
-      <footer className="mt-8 bg-slate-900">
+      <footer className="mt-8 bg-gray-900">
         <div className="container max-w-7xl mx-auto px-5 sm:px-6 py-4">
-          <p className="text-center text-slate-200">
+          <p className="text-center text-slate-200 text-sm">
             Made with{' '}
             <span
               role="img"
@@ -24,7 +24,7 @@ function App() {
             by{' '}
             <a
               href="https://github.com/roziqinkhoeru"
-              className="text-violet-600 hover:text-violet-500 transition duration-100 ease-in-out"
+              className="text-lime-500 hover:text-lime-600 transition duration-100 ease-in-out"
               target="_blank"
               rel="noopener noreferrer"
               title="Khoeru Roziqin">

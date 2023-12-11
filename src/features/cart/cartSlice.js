@@ -26,11 +26,20 @@ export const cartSlice = createSlice({
         });
       }
     },
+    removeItemFromCart: (state, action) => {
+      const targetId = action.payload.id;
+      const selectCartIndex = state.cartItems.findIndex(
+        (product) => product.id === targetId
+      );
+      if (selectCartIndex !== -1) {
+        state.cartItems.splice(selectCartIndex, 1);
+      }
+    },
   },
 });
 
 // actions ini sebegai kurir untuk mengirim data ke reducer
-export const { addItemToCart } = cartSlice.actions;
+export const { addItemToCart, removeItemFromCart } = cartSlice.actions;
 
 export default cartSlice.reducer;
 

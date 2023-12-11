@@ -1,7 +1,11 @@
 import { SearchIcon, ShoppingCartIcon } from 'lucide-react';
+import { useSelector } from 'react-redux';
+import { selectTotalItemCart } from '../features/cart/cartSlice';
 // import viteLogo from './vite.svg';
 
 function Header() {
+  const totalCartItem = useSelector(selectTotalItemCart);
+
   return (
     <header className="bg-gray-50 mobile:bg-lime-500 fixed top-0 w-full">
       <div className="container max-w-7xl mx-auto px-5 sm:px-6">
@@ -41,7 +45,7 @@ function Header() {
             />
             <div className="bg-red-500 rounded-full w-5 h-5 flex items-center justify-center absolute -top-3 -right-3">
               <span className="text-white text-xs font-medium">
-                {}
+                {totalCartItem}
               </span>
             </div>
           </button>
