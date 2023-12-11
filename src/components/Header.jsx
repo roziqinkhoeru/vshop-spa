@@ -1,13 +1,12 @@
-import { SearchIcon, ShoppingCartIcon } from 'lucide-react';
+import { ShoppingCartIcon } from 'lucide-react';
 import { useSelector } from 'react-redux';
 import { selectTotalItemCart } from '../features/cart/cartSlice';
-// import viteLogo from './vite.svg';
 
 function Header() {
   const totalCartItem = useSelector(selectTotalItemCart);
 
   return (
-    <header className="bg-gray-50 mobile:bg-lime-500 fixed top-0 w-full">
+    <header className="bg-gray-700 fixed top-0 w-full z-50">
       <div className="container max-w-7xl mx-auto px-5 sm:px-6">
         <div className="flex items-center justify-between h-16 sm:h-[4.5rem]">
           <a
@@ -17,34 +16,26 @@ function Header() {
               <img
                 src="https://vitejs.dev/logo.svg"
                 alt="Workflow"
-                className="h-8"
+                className="h-7 mobile:h-8"
               />
             </figure>
             <span className="text-gray-100 font-bold text-xl hidden mobile:block">
               VShop
             </span>
           </a>
-          <div className="relative">
-            <input
-              type="text"
-              className="bg-gray-100 pl-11 pr-3 py-3 rounded-full text-sm"
-              placeholder="Search"
-            />
-            <SearchIcon
-              size={22}
-              className="absolute top-3 left-3 text-gray-500"
-            />
-          </div>
+          <h5 className="font-bold text-lg text-gray-100 mobile:hidden">
+            VShop
+          </h5>
           <button
             className="relative"
             type="button"
             title="Cart">
             <ShoppingCartIcon
               strokeWidth={2.5}
-              className="text-lg"
+              className="w-5 stroke-gray-100"
             />
-            <div className="bg-red-500 rounded-full w-5 h-5 flex items-center justify-center absolute -top-3 -right-3">
-              <span className="text-white text-xs font-medium">
+            <div className="bg-red-500 rounded-full w-4.5 h-4.5 flex items-center justify-center absolute -top-2.5 -right-2.5">
+              <span className="text-white text-2xs font-medium">
                 {totalCartItem}
               </span>
             </div>

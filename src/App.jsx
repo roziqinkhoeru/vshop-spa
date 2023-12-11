@@ -6,12 +6,12 @@ function App() {
     <>
       <Header />
       <main className="mt-24 container max-w-7xl mx-auto px-5 sm:px-6">
-        <h1 className="text-center font-bold text-2xl mb-12 pt-4 hidden mobile:block">
+        <h1 className="text-center font-bold text-2xl mb-10 pt-6 hidden mobile:block">
           Shop Now
         </h1>
         <ProductList />
       </main>
-      <footer className="mt-8 bg-gray-900">
+      <footer className="mt-10 bg-gray-900">
         <div className="container max-w-7xl mx-auto px-5 sm:px-6 py-4">
           <p className="text-center text-slate-200 text-sm">
             Made with{' '}

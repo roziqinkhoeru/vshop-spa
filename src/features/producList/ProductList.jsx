@@ -55,7 +55,7 @@ function ProductList() {
     <>
       <div className="flex items-center mb-5 overflow-x-scroll">
         <button
-          className={`whitespace-nowrap border-2 bg-gray-100 text-sm text-left w-auto px-4 py-2 rounded-full text-gray-700 font-medium mt-2 mr-2 transition duration-100 ease-in-out ${
+          className={`whitespace-nowrap border-2 bg-gray-100 text-sm text-left w-auto px-3 py-1.5 rounded-full text-gray-700 font-medium mt-2 mr-2 transition duration-100 ease-in-out ${
             categoryFilter === 'all'
               ? 'border-gray-700 hover:bg-gray-200'
               : 'border-gray-100 hover:bg-gray-200 hover:border-gray-200'
@@ -66,7 +66,7 @@ function ProductList() {
         </button>
         {categories?.map((category) => (
           <button
-            className={`capitalize whitespace-nowrap border-2 bg-gray-100 text-sm text-left w-auto px-4 py-2 rounded-full text-gray-700 font-medium mt-2 mr-2 transition duration-300 ease-in-out ${
+            className={`capitalize whitespace-nowrap border-2 bg-gray-100 text-sm text-left w-auto px-3 py-1.5 rounded-full text-gray-700 font-medium mt-2 mr-2 transition duration-300 ease-in-out ${
               categoryFilter === category
                 ? 'border-gray-700 hover:bg-gray-200'
                 : 'border-gray-100 hover:bg-gray-200 hover:border-gray-200'
@@ -127,7 +127,8 @@ function ProductList() {
                   <button
                     className="group relative bg-gray-100 text-sm text-left w-full px-4 py-2 rounded-full text-gray-700 font-semibold mt-2 hover:bg-gray-200 transition duration-300 ease-in-out"
                     type="button"
-                    onClick={() => handleAddToCart(product)}>
+                    onClick={() => handleAddToCart(product)}
+                    title="Add to cart">
                     ${product?.price}
                     <div className="absolute w-8 h-8 rounded-full bg-gray-800 flex items-center justify-center top-0.5 bottom-0.5 right-0.5 group-hover:bg-lime-500">
                       <PlusIcon
