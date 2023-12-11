@@ -125,11 +125,14 @@ function ProductList() {
                     </p>
                   </div>
                   <button
-                    className="group relative bg-gray-100 text-sm text-left w-full px-4 py-2 rounded-full text-gray-700 font-semibold mt-2 hover:bg-gray-200 transition duration-300 ease-in-out"
+                    className="group relative bg-gray-100 text-sm text-left w-full px-4 py-2 rounded-full text-gray-700 font-semibold mt-2 hover:bg-gray-200 transition-all duration-300 ease-in-out before:bg-lime-500 before:absolute before:inset-0 before:rounded-full before:w-0 hover:before:w-full before:transition-all before:duration-300 before:ease-in-out"
                     type="button"
                     onClick={() => handleAddToCart(product)}
                     title="Add to cart">
                     ${product?.price}
+                    <span className="absolute text-gray-100 -z-10 text-center opacity-0 group-hover:z-10 group-hover:opacity-100 transition-all ease-in-out duration-400 top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2">
+                      Add to cart
+                    </span>
                     <div className="absolute w-8 h-8 rounded-full bg-gray-800 flex items-center justify-center top-0.5 bottom-0.5 right-0.5 group-hover:bg-lime-500">
                       <PlusIcon
                         size={18}

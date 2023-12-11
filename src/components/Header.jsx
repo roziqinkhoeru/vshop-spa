@@ -6,7 +6,7 @@ function Header() {
   const totalCartItem = useSelector(selectTotalItemCart);
 
   return (
-    <header className="bg-gray-700 fixed top-0 w-full z-50">
+    <header className="bg-gray-800 fixed top-0 w-full z-50">
       <div className="container max-w-7xl mx-auto px-5 sm:px-6">
         <div className="flex items-center justify-between h-16 sm:h-[4.5rem]">
           <a
