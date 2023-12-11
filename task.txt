@@ -1,0 +1,39 @@
+Contoh Hasil Akhir Fitur2 Tugas: https://dea-landing-page.vercel.app/store
+
+tugas DX (dev experience):
+
+Easy Level:
+1. validasi UI CartIcon: tidak boleh muncul label merahnya jika value masih 0.
+2. validasi tambah kurang keranjang 
+3. munculkan data kategori product dari API ke UI
+4. munculkan data rating dari API ke UI product
+5. buat component loading sebelum data api muncul
+
+Advance Level:
+1. Buat component untuk mengurutkan data berdasarkan: 
+-abjad (a to z) & z to a. 
+-harga termahal
+-harga paling murah
+
+2. buat component untuk memfilter data berdasarkan kategori produk yang tersedia di API
+
+3. buat komponen search product: pencarian data berdasarkan judul(title) product dari API.
+
+Ampun Level:
+-kombinasikan fungsi filter, sort & search component: user dapat melakukan search sekaligus filter data sekaligus juga melakukan sorting data.
+
+
+BERHADIAH:
+Uang Tunai Sebesar Rp 300.000 untuk pengumpul TERCEPAT PERTAMA yang berhasil mengerjakan semua tugasnya dengan benar.
+
+Rules:
+- mengerjakan semua tugas diatas.
+- deploy ke hostingan (gratis ataupun berbayar), gratis bisa pake vercel atau github pages dan lain-lain.
+- jika pengumpul pertama tidak lolos kualifikasi tugas maka pemeriksaan akan dilanjut ke pengumpul berikutnya.
+- mengirim link website & repository github ke whatsapp admin dengan format berikut:
+
+Pengumpulan Tugas Redux-Toolkit Berhadiah
+nama: 
+link website:
+link repository:
+design website: (modif sendiri / original course)
