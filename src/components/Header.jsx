@@ -12,7 +12,7 @@ function Header() {
         <div className="flex items-center justify-between h-16 sm:h-[4.5rem]">
           <a
             href="/"
-            className="group flex items-center text-gray-100 hover:scale-105 transition-all duration-100 ease-in-out">
+            className="flex items-center text-gray-100 hover:scale-105 transition-all duration-100 ease-in-out">
             <figure className="block mr-2">
               <img
                 src="https://vitejs.dev/logo.svg"

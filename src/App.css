@@ -1,6 +1,0 @@
-* {
-  @apply text-gray-800 leading-normal;
-}
-#root {
-  @apply bg-white min-h-screen overflow-x-hidden relative font-inter;
-}
