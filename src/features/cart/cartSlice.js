@@ -18,11 +18,14 @@ export const cartSlice = createSlice({
         state.cartItems[selectCartIndex].quantity += 1;
         state.cartItems[selectCartIndex].totalPrice =
           state.cartItems[selectCartIndex].quantity * newItem.price;
+        state.cartItems[selectCartIndex].point =
+          state.cartItems[selectCartIndex].quantity * newItem.id;
       } else {
         state.cartItems.push({
           ...newItem,
           quantity: 1,
           totalPrice: newItem.price,
+          point: newItem.id,
         });
       }
     },
@@ -44,5 +47,10 @@ export const { addItemToCart, removeItemFromCart } = cartSlice.actions;
 export default cartSlice.reducer;
 
 // selector
+export const selectCartItems = (state) => state.cart.cartItems;
 export const selectTotalItemCart = (state) =>
   state.cart.cartItems.reduce((total, item) => total + item.quantity, 0);
+export const selectTotalPrice = (state) =>
+  state.cart.cartItems.reduce((total, item) => total + item.price, 0);
+export const selectTotalPoint = (state) =>
+  state.cart.cartItems.reduce((total, item) => total + item.point, 0);

@@ -109,10 +109,10 @@ function ProductList() {
                         className="w-full h-full object-contain object-center"
                       />
                     </figure>
-                    <p className="capitalize text-xs text-gray-500 mb-0.5">
+                    <p className="capitalize text-xs text-gray-500 mb-0.5 mobile:mb-1">
                       {product?.category}
                     </p>
-                    <h6 className="mb-2 text-xs font-bold text-gray-700 line-clamp-2 hover:line-clamp-none">
+                    <h6 className="mb-2 mobile:mb-2.5 text-xs font-bold text-gray-700 line-clamp-2 hover:line-clamp-none">
                       {product?.title}
                     </h6>
                     <p className="text-xs text-gray-500">
@@ -130,10 +130,10 @@ function ProductList() {
                     onClick={() => handleAddToCart(product)}
                     title="Add to cart">
                     ${product?.price}
-                    <span className="absolute text-gray-100 -z-10 text-center opacity-0 group-hover:z-10 group-hover:opacity-100 transition-all ease-in-out duration-400 top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2">
+                    <span className="absolute whitespace-nowrap text-gray-100 -z-10 text-center opacity-0 group-hover:z-10 group-hover:opacity-100 transition-all ease-in-out duration-[400ms] top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2">
                       Add to cart
                     </span>
-                    <div className="absolute w-8 h-8 rounded-full bg-gray-800 flex items-center justify-center top-0.5 bottom-0.5 right-0.5 group-hover:bg-lime-500">
+                    <div className="absolute w-8 h-8 rounded-full bg-gray-800 flex items-center justify-center top-0.5 bottom-0.5 right-0.5 group-hover:bg-lime-500 transition-all ease-in-out duration-200 group-hover:-z-10 group-hover:scale-90">
                       <PlusIcon
                         size={18}
                         className="stroke-white"

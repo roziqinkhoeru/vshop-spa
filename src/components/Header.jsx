@@ -1,8 +1,9 @@
 import { ShoppingCartIcon } from 'lucide-react';
 import { useSelector } from 'react-redux';
 import { selectTotalItemCart } from '../features/cart/cartSlice';
+import PropTypes from 'prop-types';
 
-function Header() {
+function Header({ onOpen }) {
   const totalCartItem = useSelector(selectTotalItemCart);
 
   return (
@@ -29,7 +30,8 @@ function Header() {
           <button
             className="relative"
             type="button"
-            title="Cart">
+            title="Cart"
+            onClick={onOpen}>
             <ShoppingCartIcon
               strokeWidth={2.5}
               className="w-5 stroke-gray-100"
@@ -45,5 +47,9 @@ function Header() {
     </header>
   );
 }
+
+Header.propTypes = {
+  onOpen: PropTypes.func.isRequired,
+};
 
 export default Header;
