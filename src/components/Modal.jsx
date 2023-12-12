@@ -31,7 +31,7 @@ const ModalOverlay = ({ children, showModal, desktopView }) => {
   );
 };
 
-const cartRootElement = document.getElementById('modal-root');
+const modalRootElement = document.getElementById('modal-root');
 
 function Modal({ children }) {
   const [showModal, setShowModal] = useState(false);
@@ -58,14 +58,14 @@ function Modal({ children }) {
 
   return (
     <>
-      {ReactDOM.createPortal(<BackdropOverlay />, cartRootElement)}
+      {ReactDOM.createPortal(<BackdropOverlay />, modalRootElement)}
       {ReactDOM.createPortal(
         <ModalOverlay
           showModal={showModal}
           desktopView={isDesktopView}>
           {children}
         </ModalOverlay>,
-        cartRootElement
+        modalRootElement
       )}
     </>
   );

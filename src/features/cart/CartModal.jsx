@@ -20,7 +20,7 @@ import {
 import cartImg from '../../assets/img/cart-empty.png';
 import { useEffect, useState } from 'react';
 
-function CartModal({ onClose }) {
+function CartModal({ onClose, onOpen }) {
   const dispatch = useDispatch();
   const cartItems = useSelector(selectCartItems);
   const totalPrice = useSelector(selectTotalPrice);
@@ -60,6 +60,8 @@ function CartModal({ onClose }) {
     );
     const URL_CHECKOUT = `https://api.whatsapp.com/send?phone=${phone}&text=${message}`;
     window.open(URL_CHECKOUT, '_blank');
+    onClose();
+    onOpen();
   };
 
   useEffect(() => {
@@ -210,6 +212,7 @@ function CartModal({ onClose }) {
 
 CartModal.propTypes = {
   onClose: PropTypes.func.isRequired,
+  onOpen: PropTypes.func.isRequired,
 };
 
 export default CartModal;
