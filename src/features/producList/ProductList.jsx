@@ -143,7 +143,8 @@ function ProductList() {
                         fill="#facc15"
                         className="stroke-yellow-400 inline-block mr-1"
                       />
-                      {product?.rating?.rate} | {product?.rating?.count} reviews
+                      {product?.rating?.rate.toFixed(1)} |{' '}
+                      {product?.rating?.count} reviews
                     </p>
                   </div>
                   <button

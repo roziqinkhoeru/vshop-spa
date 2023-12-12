@@ -38,7 +38,7 @@ function ProductModal({ onClose, product }) {
   return (
     <Modal>
       <div className="w-full relative">
-        <div className="px-5 h-[calc(70vh-70px)] overflow-y-auto mb-[4.375rem]">
+        <div className="px-5 max-h-[calc(70vh-70px)] overflow-y-auto mb-[4.375rem]">
           <div className="h-full">
             <div className="absolute -top-[2.375rem] left-0 w-full">
               <h5 className="text-center font-bold">Detail Product</h5>
@@ -74,7 +74,7 @@ function ProductModal({ onClose, product }) {
                     className="stroke-yellow-400 inline-block mr-1"
                   />
                   <div className="text-yellow-600 text-sm font-semibold">
-                    {selectedProduct?.rating?.rate}
+                    {selectedProduct?.rating?.rate.toFixed(1)}
                   </div>
                 </div>
               </div>
@@ -83,7 +83,7 @@ function ProductModal({ onClose, product }) {
             <p className="mb-4 text-gray-500 text-sm">
               {selectedProduct?.description}
             </p>
-            <div className="flex items-center mb-4">
+            <div className="flex items-center mb-5">
               <h6 className="font-semibold mr-4 text-sm">Quantity</h6>
               <div className="flex items-center border border-gray-300 rounded-full overflow-hidden">
                 <button
