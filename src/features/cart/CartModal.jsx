@@ -13,6 +13,7 @@ import {
   minusItemFromCart,
   removeItemFromCart,
   selectCartItems,
+  selectTotalItemCart,
   selectTotalPoint,
   selectTotalPrice,
 } from './cartSlice';
@@ -27,6 +28,7 @@ function CartModal({ onClose }) {
   const cartItems = useSelector(selectCartItems);
   const totalPrice = useSelector(selectTotalPrice);
   const totalPoint = useSelector(selectTotalPoint);
+  const totalItem = useSelector(selectTotalItemCart);
 
   const handleAddItemCart = (product) => {
     dispatch(addItemToCart(product));
@@ -40,10 +42,31 @@ function CartModal({ onClose }) {
     dispatch(removeItemFromCart(id));
   };
 
+  const handleCheckout = () => {
+    if (selectTotalItemCart === 0) return;
+    const phone = '6282314950438';
+    const message = encodeURIComponent(
+      `Halo Admin,
+      
+      Saya ingin melakukan checkout untuk pembelian barang-barang berikut:
+      ${cartItems?.map(
+        (product, index) =>
+          `\n${index + 1}. ${product?.title} - Jumlah: ${product?.quantity}`
+      )}
+      
+      Total Pembelian: *$${totalPrice.toFixed(2)} USD*
+      
+      Mohon bantu konfirmasi ketersediaan stok dan informasi lanjut untuk proses pembayaran. Terima kasih!  
+      `
+    );
+    const URL_CHECKOUT = `https://api.whatsapp.com/send?phone=${phone}&text=${message}`;
+    window.open(URL_CHECKOUT, '_blank');
+  };
+
   return (
     <Modal>
       <div className="w-full relative">
-        <div className="px-5 h-[calc(70vh-182px)] overflow-y-auto mb-[182px]">
+        <div className="px-5 h-[calc(70vh-186px)] overflow-y-auto mb-[186px]">
           <div className="h-full">
             <div className="absolute -top-[2.375rem] left-0 w-full">
               <h5 className="text-center font-bold">Cart</h5>
@@ -55,12 +78,12 @@ function CartModal({ onClose }) {
                 <ChevronLeftIcon size={20} />
               </button>
             </div>
-            {cartItems.length === 0 ? (
+            {totalItem === 0 ? (
               <div className="flex w-full h-full items-center justify-center flex-col pb-5">
                 <img
                   src={cartImg}
                   alt="Empty Cart"
-                  className="w-24 block"
+                  className="w-28 block"
                 />
                 <p className="mt-3 text-center text-sm font-semibold">
                   Your cart is empty.
@@ -143,7 +166,7 @@ function CartModal({ onClose }) {
                 type="text"
                 className="w-full pr-4 py-3 rounded-full pl-12 text-sm bg-gray-100 focus:outline-none focus:bg-gray-100 transition duration-100 ease-in-out font-semibold uppercase text-gray-700"
                 placeholder="Add coupon code"
-                disabled={cartItems.length === 0 ? true : false}
+                disabled={totalItem === 0 ? true : false}
               />
               <TicketIcon
                 size={22}
@@ -162,7 +185,8 @@ function CartModal({ onClose }) {
             </p>
             <button
               className="bg-gray-900 text-gray-100 font-bold w-full px-6 py-3.5 rounded-xl text-center leading-normal text-sm hover:bg-lime-600 transition duration-100 ease-in-out disabled:bg-gray-400 disabled:cursor-not-allowed"
-              disabled={cartItems.length === 0 ? true : false}>
+              onClick={handleCheckout}
+              disabled={totalItem === 0 ? true : false}>
               Proceed to Checkout (WhatsApp)
             </button>
           </div>
