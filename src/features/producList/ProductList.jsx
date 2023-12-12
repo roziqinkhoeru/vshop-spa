@@ -1,12 +1,13 @@
 import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { addItemToCart } from '../cart/cartSlice';
-import { Loader2Icon, PlusIcon, ServerCrashIcon, StarIcon } from 'lucide-react';
+import { Loader2Icon, PlusIcon, StarIcon } from 'lucide-react';
 import {
   setProductsError,
   setProductsStart,
   setProductsSuccess,
 } from './productSlice';
+import systemImg from '../../assets/img/system.png';
 
 const BASE_URL = 'https://fakestoreapi.com/products';
 
@@ -59,8 +60,9 @@ function ProductList() {
             categoryFilter === 'all'
               ? 'border-gray-700 hover:bg-gray-200'
               : 'border-gray-100 hover:bg-gray-200 hover:border-gray-200'
-          }`}
+          } disabled:cursor-not-allowed disabled:bg-gray-100 disabled:text-gray-400 disabled:border-transparent`}
           type="button"
+          disabled={error ? true : false}
           onClick={() => handleFilterCategory('all')}>
           All Products
         </button>
@@ -70,9 +72,10 @@ function ProductList() {
               categoryFilter === category
                 ? 'border-gray-700 hover:bg-gray-200'
                 : 'border-gray-100 hover:bg-gray-200 hover:border-gray-200'
-            }`}
+            } disabled:cursor-not-allowed disabled:bg-gray-100 disabled:text-gray-400 disabled:border-transparent`}
             key={category}
             onClick={() => handleFilterCategory(category)}
+            disabled={error ? true : false}
             type="button">
             {category}
           </button>
@@ -88,11 +91,19 @@ function ProductList() {
           </div>
         ) : error ? (
           <div className="flex flex-col items-center justify-center min-h-[80vh]">
-            <ServerCrashIcon
-              size={48}
-              className="stroke-gray-400"
+            <img
+              src={systemImg}
+              alt=""
+              className="w-24"
             />
-            <p className="text-gray-400 font-semibold text-xl mt-1">Error</p>
+            <p className="text-gray-400 font-semibold text-lg mt-5">
+              We lost one, please try again.
+            </p>
+            <a
+              href="/"
+              className="mt-3 block bg-lime-600 text-gray-100 font-bold px-4 py-1.5 rounded-lg text-center leading-normal text-sm hover:bg-lime-500 transition duration-100 ease-in-out">
+              Reload
+            </a>
           </div>
         ) : (
           <div className="w-full grid grid-cols-4 mobile:grid-cols-12 xl:grid-cols-10 gap-4">

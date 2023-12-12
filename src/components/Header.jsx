@@ -36,11 +36,15 @@ function Header({ onOpen }) {
               strokeWidth={2.5}
               className="w-5 stroke-gray-100"
             />
-            <div className="bg-red-500 rounded-full w-4.5 h-4.5 flex items-center justify-center absolute -top-2.5 -right-2.5">
-              <span className="text-white text-2xs font-medium">
-                {totalCartItem}
-              </span>
-            </div>
+            {totalCartItem > 0 ? (
+              <div className="bg-red-500 rounded-full w-4.5 h-4.5 flex items-center justify-center absolute -top-2.5 -right-2.5">
+                <span className="text-white text-2xs font-medium">
+                  {totalCartItem}
+                </span>{' '}
+              </div>
+            ) : (
+              ''
+            )}
           </button>
         </div>
       </div>
