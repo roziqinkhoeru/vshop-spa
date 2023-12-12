@@ -43,17 +43,13 @@ function CartModal({ onClose }) {
     if (selectTotalItemCart === 0) return;
     const phone = '6282314950438';
     const message = encodeURIComponent(
-      `Halo Admin,
-      
-      Saya ingin melakukan checkout untuk pembelian barang-barang berikut:
+      `Halo Admin,\nSaya ingin melakukan checkout untuk pembelian barang-barang berikut:
       ${cartItems?.map(
         (product, index) =>
           `\n${index + 1}. ${product?.title} - Jumlah: ${product?.quantity}`
-      )}
-      
-      Total Pembelian: *$${totalPrice.toFixed(2)} USD*
-      
-      Mohon bantu konfirmasi ketersediaan stok dan informasi lanjut untuk proses pembayaran. Terima kasih!  
+      )}\n\nTotal Pembelian: *$${totalPrice.toFixed(
+        2
+      )} USD*\n\nMohon bantu konfirmasi ketersediaan stok dan informasi lanjut untuk proses pembayaran. Terima kasih! 
       `
     );
     const URL_CHECKOUT = `https://api.whatsapp.com/send?phone=${phone}&text=${message}`;
