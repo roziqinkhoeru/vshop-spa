@@ -73,7 +73,7 @@ function ProductList() {
               : 'border-gray-100 hover:bg-gray-200 hover:border-gray-200'
           } disabled:cursor-not-allowed disabled:bg-gray-100 disabled:text-gray-400 disabled:border-transparent`}
           type="button"
-          disabled={error ? true : false}
+          disabled={error || loading ? true : false}
           onClick={() => handleFilterCategory('all')}>
           All Products
         </button>
@@ -86,7 +86,7 @@ function ProductList() {
             } disabled:cursor-not-allowed disabled:bg-gray-100 disabled:text-gray-400 disabled:border-transparent`}
             key={category}
             onClick={() => handleFilterCategory(category)}
-            disabled={error ? true : false}
+            disabled={error || loading ? true : false}
             type="button">
             {category}
           </button>
