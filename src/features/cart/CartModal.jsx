@@ -19,10 +19,6 @@ import {
 } from './cartSlice';
 import cartImg from '../../assets/img/cart-empty.png';
 
-CartModal.propTypes = {
-  onClose: PropTypes.func.isRequired,
-};
-
 function CartModal({ onClose }) {
   const dispatch = useDispatch();
   const cartItems = useSelector(selectCartItems);
@@ -125,7 +121,7 @@ function CartModal({ onClose }) {
                           />
                         </span>
                       </h6>
-                      <p className="text-xs text-gray-400 mb-1">
+                      <p className="text-xs text-gray-400 mb-1 capitalize">
                         {product?.category}
                       </p>
                       <div className="flex items-center justify-between">
@@ -195,5 +191,9 @@ function CartModal({ onClose }) {
     </Modal>
   );
 }
+
+CartModal.propTypes = {
+  onClose: PropTypes.func.isRequired,
+};
 
 export default CartModal;

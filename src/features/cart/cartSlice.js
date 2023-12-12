@@ -14,8 +14,17 @@ export const cartSlice = createSlice({
       const selectCartIndex = state.cartItems.findIndex(
         (product) => product.id === newItem.id
       );
+      const countItem = action.payload.quantity ? action.payload.quantity : 1;
+      const countPrice = action.payload.totalPrice
+        ? action.payload.totalPrice
+        : action.payload.price;
+      const countPoint = action.payload.point
+        ? action.payload.point
+        : action.payload.id;
+
       if (selectCartIndex !== -1) {
-        state.cartItems[selectCartIndex].quantity += 1;
+        state.cartItems[selectCartIndex].quantity =
+          state.cartItems[selectCartIndex].quantity + countItem;
         state.cartItems[selectCartIndex].totalPrice =
           state.cartItems[selectCartIndex].quantity * newItem.price;
         state.cartItems[selectCartIndex].point =
@@ -23,9 +32,9 @@ export const cartSlice = createSlice({
       } else {
         state.cartItems.push({
           ...newItem,
-          quantity: 1,
-          totalPrice: newItem.price,
-          point: newItem.id,
+          quantity: countItem,
+          totalPrice: countPrice,
+          point: countPoint,
         });
       }
     },

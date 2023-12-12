@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { addItemToCart } from '../cart/cartSlice';
+import PropTypes from 'prop-types';
 import { Loader2Icon, PlusIcon, StarIcon } from 'lucide-react';
 import {
   setProductsError,
@@ -8,6 +8,7 @@ import {
   setProductsSuccess,
 } from './productSlice';
 import systemImg from '../../assets/img/system.png';
+import ProductModal from './ProductModal';
 
 const BASE_URL = 'https://fakestoreapi.com/products';
 
@@ -18,10 +19,8 @@ function ProductList() {
   const dispatch = useDispatch();
   const [categoryFilter, setCategoryFilter] = useState('all');
   const [filteredProducts, setFilteredProducts] = useState([]);
-
-  const handleAddToCart = (product) => {
-    dispatch(addItemToCart(product));
-  };
+  const [isOpenModalProduct, setIsOpenModalProduct] = useState(false);
+  const [selectedProduct, setSelectedProduct] = useState(null);
 
   const handleFilterCategory = (category) => {
     setCategoryFilter(category);
@@ -32,6 +31,19 @@ function ProductList() {
         productItems.filter((product) => product.category === category)
       );
     }
+  };
+
+  const handleOpenModalProduct = (product) => {
+    setIsOpenModalProduct(true);
+    setSelectedProduct({
+      ...product,
+      quantity: 1,
+      totalPrice: product.price,
+      point: product.id,
+    });
+  };
+  const handleCloseModalProduct = () => {
+    setIsOpenModalProduct(false);
   };
 
   useEffect(() => {
@@ -138,11 +150,11 @@ function ProductList() {
                   <button
                     className="group relative bg-gray-100 text-sm text-left w-full px-4 py-2 rounded-full text-gray-700 font-semibold mt-2 hover:bg-gray-200 transition-all duration-300 ease-in-out before:bg-lime-500 before:absolute before:inset-0 before:rounded-full before:w-0 hover:before:w-full before:transition-all before:duration-300 before:ease-in-out"
                     type="button"
-                    onClick={() => handleAddToCart(product)}
+                    onClick={() => handleOpenModalProduct(product)}
                     title="Add to cart">
                     ${product?.price}
                     <span className="absolute whitespace-nowrap text-gray-100 -z-10 text-center opacity-0 group-hover:z-10 group-hover:opacity-100 transition-all ease-in-out duration-[400ms] top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2">
-                      Add to cart
+                      Buy Now
                     </span>
                     <div className="absolute w-8 h-8 rounded-full bg-gray-800 flex items-center justify-center top-0.5 bottom-0.5 right-0.5 group-hover:bg-lime-500 transition-all ease-in-out duration-200 group-hover:-z-10 group-hover:scale-90">
                       <PlusIcon
@@ -159,8 +171,18 @@ function ProductList() {
           </div>
         )}
       </div>
+      {isOpenModalProduct ? (
+        <ProductModal
+          onClose={handleCloseModalProduct}
+          product={selectedProduct}
+        />
+      ) : null}
     </>
   );
 }
+
+ProductList.propTypes = {
+  onOpen: PropTypes.func.isRequired,
+};
 
 export default ProductList;
