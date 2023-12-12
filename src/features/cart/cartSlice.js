@@ -14,13 +14,11 @@ export const cartSlice = createSlice({
       const selectCartIndex = state.cartItems.findIndex(
         (product) => product.id === newItem.id
       );
-      const countItem = action.payload.quantity ? action.payload.quantity : 1;
-      const countPrice = action.payload.totalPrice
-        ? action.payload.totalPrice
-        : action.payload.price;
-      const countPoint = action.payload.point
-        ? action.payload.point
-        : action.payload.id;
+      const countItem = newItem.quantity ? newItem.quantity : 1;
+      const countPrice = newItem.totalPrice
+        ? newItem.totalPrice
+        : newItem.price;
+      const countPoint = newItem.point ? newItem.point : newItem.id;
 
       if (selectCartIndex !== -1) {
         state.cartItems[selectCartIndex].quantity =

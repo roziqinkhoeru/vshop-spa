@@ -27,7 +27,8 @@ function CartModal({ onClose }) {
   const totalItem = useSelector(selectTotalItemCart);
 
   const handleAddItemCart = (product) => {
-    dispatch(addItemToCart(product));
+    const selectedProduct = { ...product, quantity: 1 };
+    dispatch(addItemToCart(selectedProduct));
   };
 
   const handleMinusItemCart = (product) => {

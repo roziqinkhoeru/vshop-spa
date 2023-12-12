@@ -1,6 +1,5 @@
 import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import PropTypes from 'prop-types';
 import { Loader2Icon, PlusIcon, StarIcon } from 'lucide-react';
 import {
   setProductsError,
@@ -180,9 +179,5 @@ function ProductList() {
     </>
   );
 }
-
-ProductList.propTypes = {
-  onOpen: PropTypes.func.isRequired,
-};
 
 export default ProductList;
