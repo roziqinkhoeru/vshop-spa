@@ -36,7 +36,7 @@ function ProductModal({ onClose, product }) {
   }, [product]);
 
   return (
-    <Modal>
+    <Modal onClose={onClose}>
       <div className="w-full relative">
         <div className="px-5 overflow-y-auto max-h-[calc(72vh-70px)] md:max-h-[64vh] mb-[4.375rem] md:mb-0">
           <div className="h-full">

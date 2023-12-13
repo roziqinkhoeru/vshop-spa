@@ -59,7 +59,7 @@ function CartModal({ onClose, onOpen }) {
   };
 
   return (
-    <Modal>
+    <Modal onClose={onClose}>
       <div className="w-full relative">
         <div className="px-5 overflow-y-auto h-[calc(70vh-186px)] md:h-[40vh] mb-[186px] md:mb-0">
           <div className="h-full">

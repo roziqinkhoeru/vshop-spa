@@ -8,7 +8,11 @@ const BackdropOverlay = () => {
   );
 };
 
-const ModalOverlay = ({ children, showModal, desktopView }) => {
+const ModalOverlay = ({ children, showModal, desktopView, onClose }) => {
+  const handleClose = () => {
+    onClose();
+  };
+
   const desktopViewClass = `items-center ${
     showModal ? 'opacity-100 scale-100' : 'opacity-0 scale-95'
   }`;
@@ -20,7 +24,8 @@ const ModalOverlay = ({ children, showModal, desktopView }) => {
     <div
       className={`fixed inset-0 w-full h-screen flex justify-center z-[100] transition-all duration-300 ease-in-out ${
         desktopView ? desktopViewClass : mobileViewClass
-      }`}>
+      }`}
+      onClick={handleClose}>
       <div
         className={`bg-white pt-14 pb-5 ${
           desktopView ? 'rounded-xl w-[32rem]' : 'rounded-t-2xl w-full'
@@ -33,7 +38,7 @@ const ModalOverlay = ({ children, showModal, desktopView }) => {
 
 const modalRootElement = document.getElementById('modal-root');
 
-function Modal({ children }) {
+function Modal({ children, onClose }) {
   const [showModal, setShowModal] = useState(false);
   const [isDesktopView, setIsDesktopView] = useState(window.innerWidth > 768);
 
@@ -62,7 +67,8 @@ function Modal({ children }) {
       {ReactDOM.createPortal(
         <ModalOverlay
           showModal={showModal}
-          desktopView={isDesktopView}>
+          desktopView={isDesktopView}
+          onClose={onClose}>
           {children}
         </ModalOverlay>,
         modalRootElement
@@ -75,9 +81,11 @@ ModalOverlay.propTypes = {
   children: PropTypes.node.isRequired,
   showModal: PropTypes.bool.isRequired,
   desktopView: PropTypes.bool.isRequired,
+  onClose: PropTypes.func.isRequired,
 };
 Modal.propTypes = {
   children: PropTypes.node.isRequired,
+  onClose: PropTypes.func.isRequired,
 };
 
 export default Modal;

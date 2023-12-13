@@ -23,7 +23,7 @@ function Filter({ onClose }) {
   };
 
   return (
-    <Modal>
+    <Modal onClose={onClose}>
       <div className="w-full relative">
         <div className="px-5 overflow-y-auto max-h-[calc(72vh-70px)] md:max-h-[64vh]">
           <div className="h-full">
