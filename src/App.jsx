@@ -43,8 +43,7 @@ function App() {
     isOpenModalCart ||
     isOpenModalProduct ||
     isCheckout ||
-    isOpenModalFilter ||
-    isCheckout
+    isOpenModalFilter
   ) {
     bodyApp.classList.add('overflow-hidden');
   } else {
@@ -53,11 +52,11 @@ function App() {
 
   return (
     <div
-      className={`${
+      className={
         isOpenModalCart || isOpenModalProduct || isCheckout || isOpenModalFilter
           ? 'overflow-hidden'
           : ''
-      } ${isCheckout ? 'h-screen' : ''}`}>
+      }>
       <Header
         onOpenCart={handleOpenModalCart}
         onOpenFilter={handleOpenModalFilter}

@@ -136,7 +136,7 @@ function ProductList({ onOpen, onClose }) {
             />
             <SearchIcon
               size={18}
-              className="stroke-gray-400 absolute top-1/2 left-3 transform -translate-y-1/2"
+              className="stroke-gray-400 absolute top-1/2 left-3 transform -translate-y-1/2 pointer-events-none"
             />
           </div>
         </div>

@@ -10,21 +10,19 @@ import {
   selectTotalPrice,
 } from '../features/cart/cartSlice';
 
-const BackdropOverlay = () => {
-  return <div className="fixed inset-0 bg-green-700 z-50 backdrop-blur-sm" />;
-};
-
 const ModalOverlay = ({ children, showModal, showItem }) => {
   return (
     <div
-      className={`fixed inset-0 w-full min-h-screen overflow-y-auto flex items-center justify-center z-[100] transition-all duration-300 ease-in-out ${
+      className={`fixed inset-0 w-full h-full min-h-screen overflow-y-auto z-[100] transition-all duration-300 ease-in-out bg-green-700 ${
         showModal ? 'opacity-100 scale-100' : 'opacity-0 scale-95'
       }`}>
-      <div
-        className={`mx-4 w-full md:w-96 max-w-[24rem] md:max-w-none my-5 ${
-          showItem ? 'h-full py-5' : ''
-        }`}>
-        {children}
+      <div className="w-full h-full flex items-center justify-center mt-8 mb-12">
+        <div
+          className={`mx-4 w-full md:w-96 max-w-[24rem] md:max-w-none ${
+            showItem ? 'h-full py-5' : ''
+          }`}>
+          {children}
+        </div>
       </div>
     </div>
   );
@@ -59,7 +57,6 @@ function Checkout({ closeCheckout, datetime }) {
 
   return (
     <>
-      {ReactDOM.createPortal(<BackdropOverlay />, checkoutRootElement)}
       {ReactDOM.createPortal(
         <ModalOverlay
           showModal={showModal}
