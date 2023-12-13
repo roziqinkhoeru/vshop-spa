@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import PropTypes from 'prop-types';
 import { Loader2Icon, PlusIcon, StarIcon } from 'lucide-react';
 import {
   setProductsError,
@@ -11,7 +12,7 @@ import ProductModal from './ProductModal';
 
 const BASE_URL = 'https://fakestoreapi.com/products';
 
-function ProductList() {
+function ProductList({ onOpen, onClose }) {
   const { productItems, loading, categories, error } = useSelector(
     (state) => state.product
   );
@@ -34,6 +35,7 @@ function ProductList() {
 
   const handleOpenModalProduct = (product) => {
     setIsOpenModalProduct(true);
+    onOpen();
     setSelectedProduct({
       ...product,
       quantity: 1,
@@ -43,6 +45,7 @@ function ProductList() {
   };
   const handleCloseModalProduct = () => {
     setIsOpenModalProduct(false);
+    onClose();
   };
 
   useEffect(() => {
@@ -65,7 +68,7 @@ function ProductList() {
 
   return (
     <>
-      <div className="flex items-center mb-5 overflow-x-scroll">
+      <div className="flex items-center mb-5 overflow-x-scroll categories-filter">
         <button
           className={`whitespace-nowrap border-2 bg-gray-100 text-sm text-left w-auto px-3 py-1.5 rounded-full text-gray-700 font-medium mt-2 mr-2 transition duration-100 ease-in-out ${
             categoryFilter === 'all'
@@ -180,5 +183,10 @@ function ProductList() {
     </>
   );
 }
+
+ProductList.propTypes = {
+  onOpen: PropTypes.func.isRequired,
+  onClose: PropTypes.func.isRequired,
+};
 
 export default ProductList;

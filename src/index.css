@@ -8,3 +8,10 @@
 #root {
   @apply bg-white min-h-screen overflow-x-hidden relative font-inter;
 }
+.categories-filter {
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+.categories-filter::-webkit-scrollbar {
+  display: none;
+}

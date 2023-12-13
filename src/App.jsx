@@ -6,7 +6,9 @@ import CartModal from './features/cart/CartModal';
 
 function App() {
   const [isOpenModalCart, setIsOpenModalCart] = useState(false);
+  const [isOpenModalProduct, setIsOpenModalProduct] = useState(false);
   const [isCheckout, setIsCheckout] = useState(false);
+  const [dateTimeCheckout, setDateTimeCheckout] = useState(null);
 
   const handleOpenModalCart = () => {
     setIsOpenModalCart(true);
@@ -14,21 +16,36 @@ function App() {
   const handleCloseModalCart = () => {
     setIsOpenModalCart(false);
   };
+  const handleOpenModalProduct = () => {
+    setIsOpenModalProduct(true);
+  };
+  const handleCloseModalProduct = () => {
+    setIsOpenModalProduct(false);
+  };
   const handleOpenCheckout = () => {
     setIsCheckout(true);
+    setDateTimeCheckout(new Date());
   };
   const handleCloseCheckout = () => {
     window.location.reload();
   };
 
   return (
-    <>
+    <div
+      className={
+        isOpenModalCart || isOpenModalProduct || isCheckout
+          ? 'h-screen overflow-hidden'
+          : ''
+      }>
       <Header onOpen={handleOpenModalCart} />
       <main className="mt-24 container max-w-7xl mx-auto px-5 sm:px-6">
         <h1 className="text-center font-bold text-2xl mb-10 pt-6 hidden mobile:block">
           Shop Now
         </h1>
-        <ProductList />
+        <ProductList
+          onOpen={handleOpenModalProduct}
+          onClose={handleCloseModalProduct}
+        />
       </main>
       <footer className="mt-10 bg-gray-900">
         <div className="container max-w-7xl mx-auto px-5 sm:px-6 py-4">
@@ -57,8 +74,13 @@ function App() {
           onOpen={handleOpenCheckout}
         />
       ) : null}
-      {isCheckout ? <Checkout closeCheckout={handleCloseCheckout} /> : null}
-    </>
+      {isCheckout ? (
+        <Checkout
+          closeCheckout={handleCloseCheckout}
+          datetime={dateTimeCheckout}
+        />
+      ) : null}
+    </div>
   );
 }
 

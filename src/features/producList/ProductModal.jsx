@@ -51,7 +51,9 @@ function ProductModal({ onClose, product }) {
       <div className="w-full relative">
         <div
           className={`px-5 overflow-y-auto ${
-            isDesktopView ? 'max-h-[64vh]' : 'h-[calc(70vh-70px)] mb-[4.375rem]'
+            isDesktopView
+              ? 'max-h-[64vh]'
+              : 'max-h-[calc(72vh-70px)] mb-[4.375rem]'
           }`}>
           <div className="h-full">
             <div className="absolute -top-[2.375rem] left-0 w-full">
