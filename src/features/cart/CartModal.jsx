@@ -18,7 +18,6 @@ import {
   selectTotalPrice,
 } from './cartSlice';
 import cartImg from '../../assets/img/cart-empty.png';
-import { useEffect, useState } from 'react';
 
 function CartModal({ onClose, onOpen }) {
   const dispatch = useDispatch();
@@ -26,11 +25,6 @@ function CartModal({ onClose, onOpen }) {
   const totalPrice = useSelector(selectTotalPrice);
   const totalPoint = useSelector(selectTotalPoint);
   const totalItem = useSelector(selectTotalItemCart);
-  const [isDesktopView, setIsDesktopView] = useState(window.innerWidth > 768);
-
-  const handleResize = () => {
-    setIsDesktopView(window.innerWidth > 768);
-  };
 
   const handleAddItemCart = (product) => {
     const selectedProduct = { ...product, quantity: 1 };
@@ -64,20 +58,10 @@ function CartModal({ onClose, onOpen }) {
     onOpen();
   };
 
-  useEffect(() => {
-    window.addEventListener('resize', handleResize);
-    return () => {
-      window.removeEventListener('resize', handleResize);
-    };
-  }, []);
-
   return (
     <Modal>
       <div className="w-full relative">
-        <div
-          className={`px-5 overflow-y-auto ${
-            isDesktopView ? 'h-[40vh]' : 'h-[calc(70vh-186px)] mb-[186px]'
-          }`}>
+        <div className="px-5 overflow-y-auto h-[calc(70vh-186px)] md:h-[40vh] mb-[186px] md:mb-0">
           <div className="h-full">
             <div className="absolute -top-[2.375rem] left-0 w-full">
               <h5 className="text-center font-bold">Cart</h5>
@@ -170,11 +154,8 @@ function CartModal({ onClose, onOpen }) {
             )}
           </div>
         </div>
-        <div className={isDesktopView ? 'block' : 'fixed inset-x-0 bottom-0'}>
-          <div
-            className={`border-t border-gray-200 px-5 ${
-              isDesktopView ? 'pb-0' : 'pb-5'
-            }`}>
+        <div className="fixed md:static inset-x-0 bottom-0">
+          <div className="border-t border-gray-200 px-5 pb-5 md:pb-0">
             <div className="relative mb-4 mt-4.5">
               <input
                 type="text"

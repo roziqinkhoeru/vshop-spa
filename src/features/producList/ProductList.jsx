@@ -124,7 +124,7 @@ function ProductList({ onOpen, onClose }) {
             {filteredProducts?.length > 0 ? (
               filteredProducts?.map((product) => (
                 <div
-                  className="col-span-2 mobile:col-span-3 xl:col-span-2 w-full flex flex-col justify-between bg-white p-3 rounded-2xl border border-gray-200"
+                  className="col-span-2 mobile:col-span-4 md:col-span-3 xl:col-span-2 w-full flex flex-col justify-between bg-white p-3 rounded-2xl border border-gray-200"
                   key={product?.id}>
                   <div className="mb-2">
                     <figure className="mb-1 bg-white overflow-hidden rounded-lg p-4 flex items-center justify-center h-32 w-full">

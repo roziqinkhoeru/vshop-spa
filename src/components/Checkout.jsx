@@ -11,7 +11,7 @@ import {
 } from '../features/cart/cartSlice';
 
 const BackdropOverlay = () => {
-  return <div className="fixed inset-0 bg-green-700 z-50" />;
+  return <div className="fixed inset-0 bg-green-700 z-50 backdrop-blur-sm" />;
 };
 
 const ModalOverlay = ({ children, showModal, showItem }) => {

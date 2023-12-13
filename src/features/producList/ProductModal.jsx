@@ -8,11 +8,6 @@ import { useEffect, useState } from 'react';
 function ProductModal({ onClose, product }) {
   const dispatch = useDispatch();
   const [selectedProduct, setSelectedProduct] = useState(null);
-  const [isDesktopView, setIsDesktopView] = useState(window.innerWidth > 768);
-
-  const handleResize = () => {
-    setIsDesktopView(window.innerWidth > 768);
-  };
 
   const handleAddToCart = (product) => {
     dispatch(addItemToCart(product));
@@ -37,24 +32,13 @@ function ProductModal({ onClose, product }) {
   };
 
   useEffect(() => {
-    window.addEventListener('resize', handleResize);
-    return () => {
-      window.removeEventListener('resize', handleResize);
-    };
-  }, []);
-  useEffect(() => {
     setSelectedProduct(product);
   }, [product]);
 
   return (
     <Modal>
       <div className="w-full relative">
-        <div
-          className={`px-5 overflow-y-auto ${
-            isDesktopView
-              ? 'max-h-[64vh]'
-              : 'max-h-[calc(72vh-70px)] mb-[4.375rem]'
-          }`}>
+        <div className="px-5 overflow-y-auto max-h-[calc(72vh-70px)] md:max-h-[64vh] mb-[4.375rem] md:mb-0">
           <div className="h-full">
             <div className="absolute -top-[2.375rem] left-0 w-full">
               <h5 className="text-center font-bold">Detail Product</h5>
@@ -125,11 +109,8 @@ function ProductModal({ onClose, product }) {
             </div>
           </div>
         </div>
-        <div className={isDesktopView ? 'block' : 'fixed inset-x-0 bottom-0'}>
-          <div
-            className={`border-t border-gray-200 px-5 pt-5 ${
-              isDesktopView ? 'pb-0' : 'pb-5'
-            }`}>
+        <div className="fixed md:static inset-x-0 bottom-0">
+          <div className="border-t border-gray-200 px-5 pt-5 pb-5 md:pb-0">
             <button
               className="bg-gray-900 text-gray-100 font-bold w-full px-6 py-3.5 rounded-xl text-center leading-normal text-sm hover:bg-lime-600 transition duration-100 ease-in-out disabled:bg-gray-400 disabled:cursor-not-allowed"
               onClick={() => handleAddToCart(selectedProduct)}>
