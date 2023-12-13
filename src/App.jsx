@@ -40,11 +40,11 @@ function App() {
 
   return (
     <div
-      className={
+      className={`${
         isOpenModalCart || isOpenModalProduct || isCheckout || isOpenModalFilter
-          ? 'h-screen overflow-hidden'
+          ? 'overflow-hidden'
           : ''
-      }>
+      } ${isCheckout ? 'h-screen' : ''}`}>
       <Header
         onOpenCart={handleOpenModalCart}
         onOpenFilter={handleOpenModalFilter}

@@ -64,7 +64,7 @@ function Checkout({ closeCheckout, datetime }) {
         <ModalOverlay
           showModal={showModal}
           showItem={isOpenDropItem}>
-          <h6 className="text-gray-50 font-bold text-lg mb-6 text-center mt-5">
+          <h6 className="text-gray-50 font-bold text-lg pb-6 text-center pt-5">
             Checkout Receipt
           </h6>
           <div
