@@ -52,8 +52,8 @@ function CartModal({ onClose, onOpen }) {
       `Halo Admin,\nSaya ingin melakukan checkout untuk pembelian barang-barang berikut:
       ${cartItems?.map(
         (product, index) =>
-          `\n${index + 1}. ${product?.title} - Jumlah: ${product?.quantity}`
-      )}\n\nTotal Pembelian: *$${totalPrice.toFixed(
+          `\n${index + 1}. ${product?.title} [Qty: ${product?.quantity}]`
+      )}\n\nTotal Barang: *${totalItem}*\nTotal Pembelian: *$${totalPrice.toFixed(
         2
       )} USD*\n\nMohon bantu konfirmasi ketersediaan stok dan informasi lanjut untuk proses pembayaran. Terima kasih! 
       `
