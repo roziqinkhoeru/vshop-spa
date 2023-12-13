@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import PropTypes from 'prop-types';
-import { Loader2Icon, PlusIcon, StarIcon } from 'lucide-react';
+import { Loader2Icon, PlusIcon, SearchIcon, StarIcon } from 'lucide-react';
 import {
   setProductsError,
   setProductsStart,
@@ -68,32 +68,47 @@ function ProductList({ onOpen, onClose }) {
 
   return (
     <>
-      <div className="flex items-center mb-5 overflow-x-scroll categories-filter">
-        <button
-          className={`whitespace-nowrap border-2 bg-gray-100 text-sm text-left w-auto px-3 py-1.5 rounded-full text-gray-700 font-medium mt-2 mr-2 transition duration-100 ease-in-out ${
-            categoryFilter === 'all'
-              ? 'border-gray-700 hover:bg-gray-200'
-              : 'border-gray-100 hover:bg-gray-200 hover:border-gray-200'
-          } disabled:cursor-not-allowed disabled:bg-gray-100 disabled:text-gray-400 disabled:border-transparent`}
-          type="button"
-          disabled={error || loading ? true : false}
-          onClick={() => handleFilterCategory('all')}>
-          All Products
-        </button>
-        {categories?.map((category) => (
+      <div className="flex tablet:items-center tablet:justify-between flex-col-reverse tablet:flex-row mb-5 gap-4">
+        <div className="flex items-center overflow-x-scroll categories-filter">
           <button
-            className={`capitalize whitespace-nowrap border-2 bg-gray-100 text-sm text-left w-auto px-3 py-1.5 rounded-full text-gray-700 font-medium mt-2 mr-2 transition duration-300 ease-in-out ${
-              categoryFilter === category
+            className={`whitespace-nowrap border-2 bg-gray-100 text-sm text-left w-auto px-3 py-1.5 rounded-full text-gray-700 font-medium mr-2 transition duration-100 ease-in-out ${
+              categoryFilter === 'all'
                 ? 'border-gray-700 hover:bg-gray-200'
                 : 'border-gray-100 hover:bg-gray-200 hover:border-gray-200'
             } disabled:cursor-not-allowed disabled:bg-gray-100 disabled:text-gray-400 disabled:border-transparent`}
-            key={category}
-            onClick={() => handleFilterCategory(category)}
+            type="button"
             disabled={error || loading ? true : false}
-            type="button">
-            {category}
+            onClick={() => handleFilterCategory('all')}>
+            All Products
           </button>
-        ))}
+          {categories?.map((category) => (
+            <button
+              className={`capitalize whitespace-nowrap border-2 bg-gray-100 text-sm text-left w-auto px-3 py-1.5 rounded-full text-gray-700 font-medium mr-2 transition duration-300 ease-in-out ${
+                categoryFilter === category
+                  ? 'border-gray-700 hover:bg-gray-200'
+                  : 'border-gray-100 hover:bg-gray-200 hover:border-gray-200'
+              } disabled:cursor-not-allowed disabled:bg-gray-100 disabled:text-gray-400 disabled:border-transparent`}
+              key={category}
+              onClick={() => handleFilterCategory(category)}
+              disabled={error || loading ? true : false}
+              type="button">
+              {category}
+            </button>
+          ))}
+        </div>
+        <div className="">
+          <div className="relative">
+            <input
+              type="text"
+              className="w-full pl-9 pr-4 py-2 rounded-full border border-gray-200 focus:outline-none focus:ring-2 focus:ring-lime-500 focus:border-transparent text-sm"
+              placeholder="Search"
+            />
+            <SearchIcon
+              size={18}
+              className="stroke-gray-400 absolute top-1/2 left-3 transform -translate-y-1/2"
+            />
+          </div>
+        </div>
       </div>
       <div className="">
         {loading ? (
