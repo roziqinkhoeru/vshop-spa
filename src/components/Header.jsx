@@ -1,20 +1,13 @@
-import { useState } from 'react';
 import { ShoppingCartIcon, SlidersHorizontalIcon } from 'lucide-react';
 import { useSelector } from 'react-redux';
 import { selectTotalItemCart } from '../features/cart/cartSlice';
 import PropTypes from 'prop-types';
-import Filter from './Filter';
 
-function Header({ onOpen }) {
+function Header({ onOpenCart, onOpenFilter }) {
   const totalCartItem = useSelector(selectTotalItemCart);
-  const [isOpenFilter, setIsOpenFilter] = useState(false);
 
-  const handleOpenFilter = () => {
-    setIsOpenFilter(true);
-  };
-
-  const handleCloseFilter = () => {
-    setIsOpenFilter(false);
+  const handleToggleFilter = () => {
+    onOpenFilter();
   };
 
   return (
@@ -44,7 +37,7 @@ function Header({ onOpen }) {
                 className="relative"
                 type="button"
                 title="Filter"
-                onClick={handleOpenFilter}>
+                onClick={handleToggleFilter}>
                 <SlidersHorizontalIcon
                   strokeWidth={2.5}
                   className="w-5 stroke-gray-100"
@@ -59,7 +52,7 @@ function Header({ onOpen }) {
                 className="relative"
                 type="button"
                 title="Cart"
-                onClick={onOpen}>
+                onClick={onOpenCart}>
                 <ShoppingCartIcon
                   strokeWidth={2.5}
                   className="w-5 stroke-gray-100"
@@ -78,13 +71,13 @@ function Header({ onOpen }) {
           </div>
         </div>
       </header>
-      {isOpenFilter ? <Filter onClose={handleCloseFilter} /> : null}
     </>
   );
 }
 
 Header.propTypes = {
-  onOpen: PropTypes.func.isRequired,
+  onOpenCart: PropTypes.func.isRequired,
+  onOpenFilter: PropTypes.func.isRequired,
 };
 
 export default Header;
