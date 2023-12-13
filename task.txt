@@ -27,7 +27,7 @@ Rules:
 - mengerjakan semua tugas diatas.
 - deploy ke hostingan (gratis ataupun berbayar), gratis bisa pake vercel atau github pages dan lain-lain.✅
 - jika pengumpul pertama tidak lolos kualifikasi tugas maka pemeriksaan akan dilanjut ke pengumpul berikutnya.✅
-- mengirim link website & repository github ke whatsapp admin dengan format berikut:
+- mengirim link website & repository github ke whatsapp admin dengan format berikut:✅
 
 Pengumpulan Tugas Redux-Toolkit Berhadiah
 nama: Khoeru Roziqin
