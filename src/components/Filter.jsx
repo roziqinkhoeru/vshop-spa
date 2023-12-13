@@ -101,6 +101,28 @@ function Filter({ onClose }) {
                   onClick={() => handleSortFilter('z_a')}
                 />
               </div>
+              <div className="flex items-center justify-between">
+                <p className="">Top Rated</p>
+                <button
+                  className={`w-6 h-6 rounded-full ${
+                    sortFilter === 'top_rated'
+                      ? 'border-[8px] border-gray-800'
+                      : 'border-2 border-gray-400'
+                  }`}
+                  onClick={() => handleSortFilter('top_rated')}
+                />
+              </div>
+              <div className="flex items-center justify-between">
+                <p className="">Most Reviewed</p>
+                <button
+                  className={`w-6 h-6 rounded-full ${
+                    sortFilter === 'most_reviewed'
+                      ? 'border-[8px] border-gray-800'
+                      : 'border-2 border-gray-400'
+                  }`}
+                  onClick={() => handleSortFilter('most_reviewed')}
+                />
+              </div>
             </div>
             <button
               className="bg-gray-900 text-gray-100 font-bold w-full px-6 py-3.5 rounded-xl text-center leading-normal text-sm hover:bg-lime-600 transition duration-100 ease-in-out disabled:bg-gray-400 disabled:cursor-not-allowed"

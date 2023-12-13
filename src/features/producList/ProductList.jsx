@@ -71,6 +71,10 @@ function ProductList({ onOpen, onClose }) {
         return filtered.slice().sort((a, b) => b.price - a.price);
       case 'lowest':
         return filtered.slice().sort((a, b) => a.price - b.price);
+      case 'top_rated':
+        return filtered.slice().sort((a, b) => b.rating.rate - a.rating.rate);
+      case 'most_reviewed':
+        return filtered.slice().sort((a, b) => b.rating.count - a.rating.count);
       case 'relevance':
       default:
         return filtered;
