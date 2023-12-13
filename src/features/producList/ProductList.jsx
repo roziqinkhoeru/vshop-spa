@@ -139,14 +139,14 @@ function ProductList({ onOpen, onClose }) {
       </div>
       <div className="">
         {loading ? (
-          <div className="flex items-center justify-center min-h-[64vh] mobile:min-h-[60vh]">
+          <div className="flex items-center justify-center min-h-[65vh] mobile:min-h-[62vh]">
             <Loader2Icon
               className="animate-spin-fast stroke-gray-800"
               size={48}
             />
           </div>
         ) : error ? (
-          <div className="flex flex-col items-center justify-center min-h-[64vh] mobile:min-h-[60vh]">
+          <div className="flex flex-col items-center justify-center min-h-[65vh] mobile:min-h-[62vh]">
             <img
               src={systemImg}
               alt="System Computer Error"
@@ -212,7 +212,7 @@ function ProductList({ onOpen, onClose }) {
               ))
             ) : (
               <div className="col-span-full">
-                <div className="flex flex-col items-center justify-center min-h-[64vh] mobile:min-h-[60vh]">
+                <div className="flex flex-col items-center justify-center min-h-[65vh] mobile:min-h-[62vh]">
                   <img
                     src={emptyImg}
                     alt="Product Empty"
