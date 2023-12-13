@@ -38,6 +38,19 @@ function App() {
     window.location.reload();
   };
 
+  const bodyApp = document.querySelector('body');
+  if (
+    isOpenModalCart ||
+    isOpenModalProduct ||
+    isCheckout ||
+    isOpenModalFilter ||
+    isCheckout
+  ) {
+    bodyApp.classList.add('overflow-hidden');
+  } else {
+    bodyApp.classList.remove('overflow-hidden');
+  }
+
   return (
     <div
       className={`${

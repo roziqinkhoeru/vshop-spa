@@ -38,7 +38,7 @@ function ProductModal({ onClose, product }) {
   return (
     <Modal onClose={onClose}>
       <div className="w-full relative">
-        <div className="px-5 overflow-y-auto max-h-[calc(72vh-70px)] md:max-h-[64vh] mb-[4.375rem] md:mb-0">
+        <div className="px-5 overflow-y-auto max-h-[60vh] md:max-h-[58vh]">
           <div className="h-full">
             <div className="absolute -top-[2.375rem] left-0 w-full">
               <h5 className="text-center font-bold">Detail Product</h5>
@@ -109,8 +109,8 @@ function ProductModal({ onClose, product }) {
             </div>
           </div>
         </div>
-        <div className="fixed md:static inset-x-0 bottom-0">
-          <div className="border-t border-gray-200 px-5 pt-5 pb-5 md:pb-0">
+        <div className="sticky md:static inset-x-0 bottom-0">
+          <div className="border-t border-gray-200 px-5 pt-5">
             <button
               className="bg-gray-900 text-gray-100 font-bold w-full px-6 py-3.5 rounded-xl text-center leading-normal text-sm hover:bg-lime-600 transition duration-100 ease-in-out disabled:bg-gray-400 disabled:cursor-not-allowed"
               onClick={() => handleAddToCart(selectedProduct)}>
