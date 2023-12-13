@@ -12,6 +12,7 @@ function Filter({ onClose }) {
 
   const handleResetFilter = () => {
     dispatch(resetFilter());
+    onClose();
   };
   const handleSubmitFilter = () => {
     dispatch(setSortBy(sortFilter));
@@ -20,7 +21,7 @@ function Filter({ onClose }) {
   const handleSortFilter = (sort) => {
     setSortFilter(sort);
   };
-  console.log(sortFilter);
+
   return (
     <Modal>
       <div className="w-full relative">
