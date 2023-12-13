@@ -7,9 +7,10 @@ import {
   setProductsStart,
   setProductsSuccess,
 } from './productSlice';
-import systemImg from '../../assets/img/system.png';
 import ProductModal from './ProductModal';
 import { setCategory, setSearch } from './filterSlice';
+import systemImg from '../../assets/img/system.png';
+import emptyImg from '../../assets/img/empty-box.png';
 
 const BASE_URL = 'https://fakestoreapi.com/products';
 
@@ -138,17 +139,17 @@ function ProductList({ onOpen, onClose }) {
       </div>
       <div className="">
         {loading ? (
-          <div className="flex items-center justify-center min-h-[80vh]">
+          <div className="flex items-center justify-center min-h-[64vh] mobile:min-h-[60vh]">
             <Loader2Icon
               className="animate-spin-fast stroke-gray-800"
               size={48}
             />
           </div>
         ) : error ? (
-          <div className="flex flex-col items-center justify-center min-h-[80vh]">
+          <div className="flex flex-col items-center justify-center min-h-[64vh] mobile:min-h-[60vh]">
             <img
               src={systemImg}
-              alt=""
+              alt="System Computer Error"
               className="w-24"
             />
             <p className="text-gray-400 font-semibold text-lg mt-5">
@@ -210,7 +211,18 @@ function ProductList({ onOpen, onClose }) {
                 </div>
               ))
             ) : (
-              <p>Not found</p>
+              <div className="col-span-full">
+                <div className="flex flex-col items-center justify-center min-h-[64vh] mobile:min-h-[60vh]">
+                  <img
+                    src={emptyImg}
+                    alt="Product Empty"
+                    className="w-24"
+                  />
+                  <p className="text-gray-400 font-semibold text-lg mt-5">
+                    No products found.
+                  </p>
+                </div>
+              </div>
             )}
           </div>
         )}
