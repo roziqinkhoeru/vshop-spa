@@ -33,7 +33,7 @@ function Header({ onOpenCart, onOpenFilter }) {
             <h5 className="font-bold text-lg text-gray-100 mobile:hidden">
               VShop
             </h5>
-            <div className="flex items-center space-x-4">
+            <div className="flex items-center space-x-4.5 mobile:space-x-6">
               <button
                 className="relative"
                 type="button"
