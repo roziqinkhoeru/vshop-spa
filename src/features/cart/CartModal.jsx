@@ -61,7 +61,7 @@ function CartModal({ onClose, onOpen }) {
   return (
     <Modal onClose={onClose}>
       <div className="w-full relative">
-        <div className="px-5 overflow-y-auto h-[calc(70vh-186px)] md:h-[40vh] mb-[186px] md:mb-0">
+        <div className="px-5 overflow-y-auto h-[42vh]">
           <div className="h-full">
             <div className="absolute -top-[2.375rem] left-0 w-full">
               <h5 className="text-center font-bold">Cart</h5>
@@ -154,8 +154,8 @@ function CartModal({ onClose, onOpen }) {
             )}
           </div>
         </div>
-        <div className="fixed md:static inset-x-0 bottom-0">
-          <div className="border-t border-gray-200 px-5 pb-5 md:pb-0">
+        <div className="sticky md:static inset-x-0 bottom-0">
+          <div className="border-t border-gray-200 px-5">
             <div className="relative mb-4 mt-4.5">
               <input
                 type="text"

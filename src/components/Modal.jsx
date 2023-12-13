@@ -24,7 +24,7 @@ const ModalOverlay = ({ children, showModal, desktopView }) => {
 
   return (
     <div
-      className={`fixed inset-x-0 bottom-0 top-auto w-full h-auto flex justify-center z-[100] transition-all duration-300 ease-in-out ${
+      className={`fixed inset-x-0 bottom-0 top-auto md:top-0 w-full h-auto md:h-screen flex justify-center z-[100] transition-all duration-300 ease-in-out ${
         desktopView ? desktopViewClass : mobileViewClass
       }`}>
       <div
