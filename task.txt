@@ -11,14 +11,14 @@ Easy Level:
 
 Advance Level:
 1. Buat component untuk mengurutkan data berdasarkan: 
--abjad (a to z) & z to a. 
--harga termahal
--harga paling murah
+-abjad (a to z) & z to a. ✅
+-harga termahal✅
+-harga paling murah✅
 2. buat component untuk memfilter data berdasarkan kategori produk yang tersedia di API✅
-3. buat komponen search product: pencarian data berdasarkan judul(title) product dari API.
+3. buat komponen search product: pencarian data berdasarkan judul(title) product dari API.✅
 
 Ampun Level:
--kombinasikan fungsi filter, sort & search component: user dapat melakukan search sekaligus filter data sekaligus juga melakukan sorting data.
+-kombinasikan fungsi filter, sort & search component: user dapat melakukan search sekaligus filter data sekaligus juga melakukan sorting data.✅
 
 BERHADIAH:
 Uang Tunai Sebesar Rp 300.000 untuk pengumpul TERCEPAT PERTAMA yang berhasil mengerjakan semua tugasnya dengan benar.

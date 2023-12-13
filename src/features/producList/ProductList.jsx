@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import PropTypes from 'prop-types';
 import { Loader2Icon, PlusIcon, SearchIcon, StarIcon } from 'lucide-react';
@@ -9,6 +9,7 @@ import {
 } from './productSlice';
 import systemImg from '../../assets/img/system.png';
 import ProductModal from './ProductModal';
+import { setCategory, setSearch } from './filterSlice';
 
 const BASE_URL = 'https://fakestoreapi.com/products';
 
@@ -16,21 +17,23 @@ function ProductList({ onOpen, onClose }) {
   const { productItems, loading, categories, error } = useSelector(
     (state) => state.product
   );
+  const {
+    category: selectedCategory,
+    sortBy,
+    search,
+  } = useSelector((state) => state.filter.filters);
   const dispatch = useDispatch();
-  const [categoryFilter, setCategoryFilter] = useState('all');
-  const [filteredProducts, setFilteredProducts] = useState([]);
+
   const [isOpenModalProduct, setIsOpenModalProduct] = useState(false);
   const [selectedProduct, setSelectedProduct] = useState(null);
 
   const handleFilterCategory = (category) => {
-    setCategoryFilter(category);
-    if (category === 'all') {
-      setFilteredProducts(productItems);
-    } else {
-      setFilteredProducts(
-        productItems.filter((product) => product.category === category)
-      );
-    }
+    dispatch(setCategory(category));
+  };
+
+  const handleSearch = (e) => {
+    const { value } = e.target;
+    dispatch(setSearch(value));
   };
 
   const handleOpenModalProduct = (product) => {
@@ -48,6 +51,31 @@ function ProductList({ onOpen, onClose }) {
     onClose();
   };
 
+  const filteredProducts = useMemo(() => {
+    const filtered = productItems.filter((product) => {
+      const matchesSearch = product.title
+        .toLowerCase()
+        .includes(search.toLowerCase());
+      const matchesCategory =
+        selectedCategory === 'all' || product.category === selectedCategory;
+      return matchesSearch && matchesCategory;
+    });
+
+    switch (sortBy) {
+      case 'a_z':
+        return filtered.slice().sort((a, b) => a.title.localeCompare(b.title));
+      case 'z_a':
+        return filtered.slice().sort((a, b) => b.title.localeCompare(a.title));
+      case 'highest':
+        return filtered.slice().sort((a, b) => b.price - a.price);
+      case 'lowest':
+        return filtered.slice().sort((a, b) => a.price - b.price);
+      case 'relevance':
+      default:
+        return filtered;
+    }
+  }, [productItems, search, selectedCategory, sortBy]);
+
   useEffect(() => {
     const fetchProducts = async () => {
       try {
@@ -62,17 +90,13 @@ function ProductList({ onOpen, onClose }) {
     fetchProducts();
   }, [dispatch]);
 
-  useEffect(() => {
-    setFilteredProducts(productItems);
-  }, [productItems]);
-
   return (
     <>
       <div className="flex tablet:items-center tablet:justify-between flex-col-reverse tablet:flex-row mb-5 gap-4">
         <div className="flex items-center overflow-x-scroll categories-filter">
           <button
             className={`whitespace-nowrap border-2 bg-gray-100 text-sm text-left w-auto px-3 py-1.5 rounded-full text-gray-700 font-medium mr-2 transition duration-100 ease-in-out ${
-              categoryFilter === 'all'
+              selectedCategory === 'all'
                 ? 'border-gray-700 hover:bg-gray-200'
                 : 'border-gray-100 hover:bg-gray-200 hover:border-gray-200'
             } disabled:cursor-not-allowed disabled:bg-gray-100 disabled:text-gray-400 disabled:border-transparent`}
@@ -84,7 +108,7 @@ function ProductList({ onOpen, onClose }) {
           {categories?.map((category) => (
             <button
               className={`capitalize whitespace-nowrap border-2 bg-gray-100 text-sm text-left w-auto px-3 py-1.5 rounded-full text-gray-700 font-medium mr-2 transition duration-300 ease-in-out ${
-                categoryFilter === category
+                selectedCategory === category
                   ? 'border-gray-700 hover:bg-gray-200'
                   : 'border-gray-100 hover:bg-gray-200 hover:border-gray-200'
               } disabled:cursor-not-allowed disabled:bg-gray-100 disabled:text-gray-400 disabled:border-transparent`}
@@ -102,6 +126,8 @@ function ProductList({ onOpen, onClose }) {
               type="text"
               className="w-full pl-9 pr-4 py-2 rounded-full border border-gray-200 focus:outline-none focus:ring-2 focus:ring-lime-500 focus:border-transparent text-sm"
               placeholder="Search"
+              value={search}
+              onChange={handleSearch}
             />
             <SearchIcon
               size={18}

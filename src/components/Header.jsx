@@ -5,6 +5,7 @@ import PropTypes from 'prop-types';
 
 function Header({ onOpenCart, onOpenFilter }) {
   const totalCartItem = useSelector(selectTotalItemCart);
+  const { sortBy } = useSelector((state) => state.filter.filters);
 
   const handleToggleFilter = () => {
     onOpenFilter();
@@ -42,7 +43,7 @@ function Header({ onOpenCart, onOpenFilter }) {
                   strokeWidth={2.5}
                   className="w-5 stroke-gray-100"
                 />
-                {totalCartItem > 0 ? (
+                {sortBy !== 'relevance' ? (
                   <div className="bg-red-500 rounded-full w-3 h-3 flex items-center justify-center absolute -top-1 -right-1.5" />
                 ) : (
                   ''

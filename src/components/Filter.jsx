@@ -2,20 +2,25 @@ import { useState } from 'react';
 import PropTypes from 'prop-types';
 import Modal from './Modal';
 import { ChevronLeftIcon } from 'lucide-react';
+import { useDispatch, useSelector } from 'react-redux';
+import { resetFilter, setSortBy } from '../features/producList/filterSlice';
 
 function Filter({ onClose }) {
-  const [sortFilter, setSortFilter] = useState('relevance');
+  const dispatch = useDispatch();
+  const { sortBy } = useSelector((state) => state.filter.filters);
+  const [sortFilter, setSortFilter] = useState(sortBy);
 
   const handleResetFilter = () => {
-    setSortFilter('relevance');
-    onClose();
+    dispatch(resetFilter());
   };
   const handleSubmitFilter = () => {
+    dispatch(setSortBy(sortFilter));
     onClose();
   };
   const handleSortFilter = (sort) => {
     setSortFilter(sort);
   };
+  console.log(sortFilter);
   return (
     <Modal>
       <div className="w-full relative">
@@ -34,7 +39,7 @@ function Filter({ onClose }) {
             <div className="absolute -top-10 right-3 z-[101]">
               <button
                 className="bg-gray-100 rounded-md px-2.5 py-1 text-gray-600 hover:bg-gray-200 transition duration-100 ease-in-out text-sm hover:text-gray-800"
-                onClick={handleResetFilter}>
+                onClick={() => handleResetFilter()}>
                 Reset
               </button>
             </div>
@@ -109,7 +114,7 @@ function Filter({ onClose }) {
 }
 
 Filter.propTypes = {
-  onClose: PropTypes.func,
+  onClose: PropTypes.func.isRequired,
 };
 
 export default Filter;
