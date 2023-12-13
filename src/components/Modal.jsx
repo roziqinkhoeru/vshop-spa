@@ -14,7 +14,10 @@ const BackdropOverlay = ({ onClose }) => {
   );
 };
 
-const ModalOverlay = ({ children, showModal, desktopView }) => {
+const ModalOverlay = ({ children, showModal, desktopView, onClose }) => {
+  const handleClose = () => {
+    onClose();
+  };
   const desktopViewClass = `items-center ${
     showModal ? 'opacity-100 scale-100' : 'opacity-0 scale-95'
   }`;
@@ -26,11 +29,14 @@ const ModalOverlay = ({ children, showModal, desktopView }) => {
     <div
       className={`fixed inset-x-0 bottom-0 top-auto md:top-0 w-full h-auto md:h-screen flex justify-center z-[100] transition-all duration-300 ease-in-out ${
         desktopView ? desktopViewClass : mobileViewClass
-      }`}>
+      }`}
+      onClick={handleClose}
+      tabIndex={-1}>
       <div
         className={`bg-white pt-14 pb-5 ${
           desktopView ? 'rounded-xl w-[32rem]' : 'rounded-t-2xl w-full'
-        }`}>
+        }`}
+        onClick={(e) => e.stopPropagation()}>
         {children}
       </div>
     </div>
@@ -71,7 +77,8 @@ function Modal({ children, onClose }) {
       {ReactDOM.createPortal(
         <ModalOverlay
           showModal={showModal}
-          desktopView={isDesktopView}>
+          desktopView={isDesktopView}
+          onClose={onClose}>
           {children}
         </ModalOverlay>,
         modalRootElement
@@ -87,6 +94,7 @@ ModalOverlay.propTypes = {
   children: PropTypes.node.isRequired,
   showModal: PropTypes.bool.isRequired,
   desktopView: PropTypes.bool.isRequired,
+  onClose: PropTypes.func.isRequired,
 };
 Modal.propTypes = {
   children: PropTypes.node.isRequired,
