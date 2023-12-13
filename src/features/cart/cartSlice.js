@@ -1,7 +1,39 @@
 import { createSlice } from '@reduxjs/toolkit';
+import CryptoJS from 'crypto-js';
+
+const ENCRYPTION_KEY = import.meta.env.VITE_ENCRYPTION_KEY;
+
+const loadCartFromStorage = () => {
+  try {
+    const encryptedCartData = localStorage.getItem('vCart');
+    if (!encryptedCartData) {
+      return [];
+    }
+
+    const bytes = CryptoJS.AES.decrypt(encryptedCartData, ENCRYPTION_KEY);
+    const decryptedData = JSON.parse(bytes.toString(CryptoJS.enc.Utf8));
+
+    return decryptedData || [];
+  } catch (error) {
+    console.error('Error loading cart from localStorage:', error);
+    return [];
+  }
+};
+
+const saveCartToStorage = (cartData) => {
+  try {
+    const encryptedData = CryptoJS.AES.encrypt(
+      JSON.stringify(cartData),
+      ENCRYPTION_KEY
+    ).toString();
+    localStorage.setItem('vCart', encryptedData);
+  } catch (error) {
+    console.error('Error saving cart to localStorage:', error);
+  }
+};
 
 const initialState = {
-  cartItems: [],
+  cartItems: loadCartFromStorage(),
 };
 
 export const cartSlice = createSlice({
@@ -35,6 +67,7 @@ export const cartSlice = createSlice({
           point: countPoint,
         });
       }
+      saveCartToStorage(state.cartItems);
     },
     minusItemFromCart: (state, action) => {
       const targetId = action.payload.id;
@@ -54,17 +87,27 @@ export const cartSlice = createSlice({
           );
         }
       }
+      saveCartToStorage(state.cartItems);
     },
     removeItemFromCart: (state, action) => {
       const targetId = action.payload;
       state.cartItems = state.cartItems.filter((item) => item.id !== targetId);
+      saveCartToStorage(state.cartItems);
+    },
+    clearCart: (state) => {
+      state.cartItems = [];
+      saveCartToStorage(state.cartItems);
     },
   },
 });
 
 // actions ini sebegai kurir untuk mengirim data ke reducer
-export const { addItemToCart, minusItemFromCart, removeItemFromCart } =
-  cartSlice.actions;
+export const {
+  addItemToCart,
+  minusItemFromCart,
+  removeItemFromCart,
+  clearCart,
+} = cartSlice.actions;
 
 export default cartSlice.reducer;
 

@@ -10,6 +10,7 @@ import PropTypes from 'prop-types';
 import Modal from '../../components/Modal';
 import {
   addItemToCart,
+  clearCart,
   minusItemFromCart,
   removeItemFromCart,
   selectCartItems,
@@ -19,7 +20,7 @@ import {
 } from './cartSlice';
 import cartImg from '../../assets/img/cart-empty.png';
 
-function CartModal({ onClose, onOpen }) {
+function CartModal({ onClose, onCheckout }) {
   const dispatch = useDispatch();
   const cartItems = useSelector(selectCartItems);
   const totalPrice = useSelector(selectTotalPrice);
@@ -54,8 +55,9 @@ function CartModal({ onClose, onOpen }) {
     );
     const URL_CHECKOUT = `https://api.whatsapp.com/send?phone=${phone}&text=${message}`;
     window.open(URL_CHECKOUT, '_blank');
+    dispatch(clearCart());
     onClose();
-    onOpen();
+    onCheckout();
   };
 
   return (
@@ -193,7 +195,7 @@ function CartModal({ onClose, onOpen }) {
 
 CartModal.propTypes = {
   onClose: PropTypes.func.isRequired,
-  onOpen: PropTypes.func.isRequired,
+  onCheckout: PropTypes.func.isRequired,
 };
 
 export default CartModal;

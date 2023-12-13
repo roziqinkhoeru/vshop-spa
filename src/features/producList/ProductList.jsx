@@ -12,7 +12,7 @@ import { setCategory, setSearch } from './filterSlice';
 import systemImg from '../../assets/img/system.png';
 import emptyImg from '../../assets/img/empty-box.png';
 
-const BASE_URL = 'https://fakestoreapi.com/products';
+const BASE_URL = import.meta.env.VITE_API_KEY;
 
 function ProductList({ onOpen, onClose }) {
   const { productItems, loading, categories, error } = useSelector(

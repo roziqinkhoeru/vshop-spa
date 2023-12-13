@@ -94,7 +94,7 @@ function App() {
       {isOpenModalCart ? (
         <CartModal
           onClose={handleCloseModalCart}
-          onOpen={handleOpenCheckout}
+          onCheckout={handleOpenCheckout}
         />
       ) : null}
       {isCheckout ? (
