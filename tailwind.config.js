@@ -20,6 +20,7 @@ export default {
         4.5: '1.125rem',
       },
       screens: {
+        xxs: '320px',
         xs: '390px',
         xsm: '480px',
         mobile: '576px',
