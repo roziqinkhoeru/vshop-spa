@@ -4,12 +4,14 @@ import Checkout from './components/Checkout';
 import ProductList from './features/producList/ProductList';
 import CartModal from './features/cart/CartModal';
 import Filter from './components/Filter';
+import WishlistModal from './features/wishlist/WishlistModal';
 
 function App() {
   const [isOpenModalCart, setIsOpenModalCart] = useState(false);
   const [isOpenModalProduct, setIsOpenModalProduct] = useState(false);
   const [isCheckout, setIsCheckout] = useState(false);
   const [isOpenModalFilter, setIsOpenModalFilter] = useState(false);
+  const [isOpenModalWishlist, setIsOpenModalWishlist] = useState(false);
   const [dateTimeCheckout, setDateTimeCheckout] = useState(null);
 
   const handleOpenModalCart = () => {
@@ -37,13 +39,20 @@ function App() {
   const handleCloseCheckout = () => {
     setIsCheckout(false);
   };
+  const handleOpenModalWishlist = () => {
+    setIsOpenModalWishlist(true);
+  };
+  const handleCloseModalWishlist = () => {
+    setIsOpenModalWishlist(false);
+  };
 
   const bodyApp = document.querySelector('body');
   if (
     isOpenModalCart ||
     isOpenModalProduct ||
     isCheckout ||
-    isOpenModalFilter
+    isOpenModalFilter ||
+    isOpenModalWishlist
   ) {
     bodyApp.classList.add('overflow-hidden');
   } else {
@@ -53,13 +62,18 @@ function App() {
   return (
     <div
       className={
-        isOpenModalCart || isOpenModalProduct || isCheckout || isOpenModalFilter
+        isOpenModalCart ||
+        isOpenModalProduct ||
+        isCheckout ||
+        isOpenModalFilter ||
+        isOpenModalWishlist
           ? 'overflow-hidden'
           : ''
       }>
       <Header
         onOpenCart={handleOpenModalCart}
         onOpenFilter={handleOpenModalFilter}
+        onOpenWishlist={handleOpenModalWishlist}
       />
       <main className="mt-24 container max-w-7xl mx-auto px-5 sm:px-6">
         <h1 className="text-center font-bold text-2xl mb-10 pt-6 hidden mobile:block">
@@ -104,6 +118,9 @@ function App() {
         />
       ) : null}
       {isOpenModalFilter ? <Filter onClose={handleCloseModalFilter} /> : null}
+      {isOpenModalWishlist ? (
+        <WishlistModal onClose={handleCloseModalWishlist} />
+      ) : null}
     </div>
   );
 }

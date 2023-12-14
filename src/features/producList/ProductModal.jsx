@@ -1,12 +1,23 @@
 import PropTypes from 'prop-types';
 import Modal from '../../components/Modal';
-import { ChevronLeftIcon, MinusIcon, PlusIcon, StarIcon } from 'lucide-react';
-import { useDispatch } from 'react-redux';
+import {
+  ChevronLeftIcon,
+  HeartIcon,
+  MinusIcon,
+  PlusIcon,
+  StarIcon,
+} from 'lucide-react';
+import { useDispatch, useSelector } from 'react-redux';
 import { addItemToCart } from '../cart/cartSlice';
 import { useEffect, useState } from 'react';
+import {
+  addItemToWishlist,
+  selectWishlistItems,
+} from '../wishlist/wishlistSlice';
 
 function ProductModal({ onClose, product }) {
   const dispatch = useDispatch();
+  const wishlistItems = useSelector(selectWishlistItems);
   const [selectedProduct, setSelectedProduct] = useState(null);
 
   const handleAddToCart = (product) => {
@@ -30,6 +41,12 @@ function ProductModal({ onClose, product }) {
       point: product.point * (product.quantity - 1),
     });
   };
+  const handleWishlist = (product) => {
+    dispatch(addItemToWishlist(product));
+  };
+  const isWishlistProduct = (product) => {
+    return wishlistItems.some((item) => item.id === product.id);
+  };
 
   useEffect(() => {
     setSelectedProduct(product);
@@ -50,12 +67,23 @@ function ProductModal({ onClose, product }) {
                 <ChevronLeftIcon size={20} />
               </button>
             </div>
-            <figure className="block w-full h-36 rounded-xl overflow-hidden mt-4 mb-5 px-4 py-5 border border-gray-200">
+            <figure className="relative block w-full h-36 rounded-xl overflow-hidden mt-4 mb-5 px-4 py-5 border border-gray-200">
               <img
                 src={selectedProduct?.image}
                 alt={selectedProduct?.title}
                 className="w-full h-full object-contain object-center"
               />
+              <div className="absolute top-3 mobile:top-4 right-3 mobile:right-4">
+                <HeartIcon
+                  size={22}
+                  className={`cursor-pointer ${
+                    isWishlistProduct(product)
+                      ? 'stroke-red-500 fill-red-500 bg-red-500'
+                      : 'stroke-gray-400'
+                  }}`}
+                  onClick={() => handleWishlist(product)}
+                />
+              </div>
             </figure>
             <div className="flex justify-between mb-4">
               <div className="">

@@ -1,14 +1,22 @@
-import { ShoppingCartIcon, SlidersHorizontalIcon } from 'lucide-react';
+import {
+  BookHeartIcon,
+  ShoppingCartIcon,
+  SlidersHorizontalIcon,
+} from 'lucide-react';
 import { useSelector } from 'react-redux';
 import { selectTotalItemCart } from '../features/cart/cartSlice';
 import PropTypes from 'prop-types';
 
-function Header({ onOpenCart, onOpenFilter }) {
+function Header({ onOpenCart, onOpenFilter, onOpenWishlist }) {
   const totalCartItem = useSelector(selectTotalItemCart);
   const { sortBy } = useSelector((state) => state.filter.filters);
 
   const handleToggleFilter = () => {
     onOpenFilter();
+  };
+
+  const handleToggleWishlist = () => {
+    onOpenWishlist();
   };
 
   return (
@@ -52,6 +60,21 @@ function Header({ onOpenCart, onOpenFilter }) {
               <button
                 className="relative"
                 type="button"
+                title="wishlist"
+                onClick={handleToggleWishlist}>
+                <BookHeartIcon
+                  strokeWidth={2.5}
+                  className="w-5 stroke-gray-100"
+                />
+                {sortBy !== 'relevance' ? (
+                  <div className="bg-red-500 rounded-full w-3 h-3 flex items-center justify-center absolute -top-1 -right-1.5" />
+                ) : (
+                  ''
+                )}
+              </button>
+              <button
+                className="relative"
+                type="button"
                 title="Cart"
                 onClick={onOpenCart}>
                 <ShoppingCartIcon
@@ -79,6 +102,7 @@ function Header({ onOpenCart, onOpenFilter }) {
 Header.propTypes = {
   onOpenCart: PropTypes.func.isRequired,
   onOpenFilter: PropTypes.func.isRequired,
+  onOpenWishlist: PropTypes.func.isRequired,
 };
 
 export default Header;
