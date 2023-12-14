@@ -2,7 +2,6 @@ import { createSlice } from '@reduxjs/toolkit';
 import CryptoJS from 'crypto-js';
 
 const ENCRYPTION_KEY = import.meta.env.VITE_ENCRYPTION_KEY;
-console.log('ENCRYPTION_KEY', ENCRYPTION_KEY);
 
 const loadCartFromStorage = () => {
   try {
