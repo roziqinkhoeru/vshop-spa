@@ -10,7 +10,6 @@ import PropTypes from 'prop-types';
 import Modal from '../../components/Modal';
 import {
   addItemToCart,
-  clearCart,
   minusItemFromCart,
   removeItemFromCart,
   selectCartItems,
@@ -55,7 +54,6 @@ function CartModal({ onClose, onCheckout }) {
     );
     const URL_CHECKOUT = `https://api.whatsapp.com/send?phone=${phone}&text=${message}`;
     window.open(URL_CHECKOUT, '_blank');
-    dispatch(clearCart());
     onClose();
     onCheckout();
   };

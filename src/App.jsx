@@ -35,7 +35,7 @@ function App() {
     setDateTimeCheckout(new Date());
   };
   const handleCloseCheckout = () => {
-    window.location.reload();
+    setIsCheckout(false);
   };
 
   const bodyApp = document.querySelector('body');

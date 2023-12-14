@@ -2,8 +2,9 @@ import ReactDOM from 'react-dom';
 import PropTypes from 'prop-types';
 import { useEffect, useState } from 'react';
 import { CheckIcon, ChevronDownIcon, CircleIcon } from 'lucide-react';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import {
+  clearCart,
   selectCartItems,
   selectTotalItemCart,
   selectTotalPoint,
@@ -31,6 +32,7 @@ const ModalOverlay = ({ children, showModal, showItem }) => {
 const checkoutRootElement = document.getElementById('checkout-root');
 
 function Checkout({ closeCheckout, datetime }) {
+  const dispatch = useDispatch();
   const totalItems = useSelector(selectTotalItemCart);
   const totalPrice = useSelector(selectTotalPrice);
   const checkoutItems = useSelector(selectCartItems);
@@ -46,6 +48,11 @@ function Checkout({ closeCheckout, datetime }) {
     hour: 'numeric',
     minute: 'numeric',
   });
+
+  const handleCheckout = () => {
+    closeCheckout();
+    dispatch(clearCart());
+  };
 
   useEffect(() => {
     const timeout = setTimeout(() => {
@@ -171,13 +178,13 @@ function Checkout({ closeCheckout, datetime }) {
             </p>
             <button
               className="bg-green-500 text-gray-100 font-bold w-full px-6 py-3.5 rounded-xl text-center leading-normal text-sm hover:bg-green-600 transition duration-100 ease-in-out disabled:bg-emerald-200 disabled:cursor-not-allowed mb-5"
-              onClick={closeCheckout}>
+              onClick={handleCheckout}>
               Done
             </button>
             <p
               className="text-center text-emerald-500 font-semibold mb-2 cursor-pointer hover:text-emerald-600"
               role="button"
-              onClick={closeCheckout}>
+              onClick={handleCheckout}>
               Shop More
             </p>
             <div className="absolute -bottom-4 left-2.5 right-2.5">
