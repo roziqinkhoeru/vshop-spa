@@ -282,7 +282,7 @@ function ProductList({ onOpen, onClose, onOpenFilter }) {
                 <div className="flex flex-col items-center justify-center min-h-[68vh] mobile:min-h-[62vh]">
                   <img
                     src={emptyImg}
-                    alt="Product Empty"
+                    alt="Box Product Empty"
                     className="w-24"
                   />
                   <p className="text-gray-400 font-semibold text-lg mt-5">

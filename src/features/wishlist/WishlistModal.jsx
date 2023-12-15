@@ -44,7 +44,7 @@ function WishlistModal({ onClose, onOpenCart }) {
               <div className="flex w-full h-full items-center justify-center flex-col pb-5">
                 <img
                   src={wishlistImg}
-                  alt="Empty Cart"
+                  alt="Wishlist Blue Box Empty"
                   className="w-28 block"
                 />
                 <p className="mt-3 text-center text-sm font-semibold">

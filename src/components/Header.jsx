@@ -23,9 +23,10 @@ function Header({ onOpenCart, onOpenWishlist }) {
               <figure className="block mr-2">
                 <img
                   src="https://vitejs.dev/logo.svg"
-                  alt="Workflow"
+                  alt="Vite Logo"
                   className="h-7 mobile:h-8"
                 />
+                s
               </figure>
               <span className="text-gray-100 font-bold text-xl hidden mobile:block">
                 VShop

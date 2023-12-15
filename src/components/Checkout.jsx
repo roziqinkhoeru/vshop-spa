@@ -110,7 +110,7 @@ function Checkout({ closeCheckout, datetime }) {
                   <figure className="w-10 h-10 flex items-center justify-center bg-white rounded-lg">
                     <img
                       src="https://vitejs.dev/logo.svg"
-                      alt="vite logo"
+                      alt="Vite Logo"
                       className="w-6"
                     />
                   </figure>
