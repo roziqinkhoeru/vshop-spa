@@ -241,9 +241,9 @@ function ProductList({ onOpen, onClose, onOpenFilter }) {
                   <span className="block capitalize text-xs text-gray-500 mb-0.5 mobile:mb-1">
                     {product?.category}
                   </span>
-                  <h6 className="mb-2 mobile:mb-2.5 text-xs font-bold text-gray-700 line-clamp-2 hover:line-clamp-none">
+                  <h1 className="mb-2 mobile:mb-2.5 text-xs font-bold text-gray-700 line-clamp-2 hover:line-clamp-none">
                     {product?.title}
-                  </h6>
+                  </h1>
                   <p className="text-xs text-gray-500">
                     <StarIcon
                       size={14}
