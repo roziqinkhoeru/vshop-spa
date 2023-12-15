@@ -72,7 +72,6 @@ function App() {
       }>
       <Header
         onOpenCart={handleOpenModalCart}
-        onOpenFilter={handleOpenModalFilter}
         onOpenWishlist={handleOpenModalWishlist}
       />
       <main className="mt-24 container max-w-7xl mx-auto px-5 sm:px-6">
@@ -82,6 +81,7 @@ function App() {
         <ProductList
           onOpen={handleOpenModalProduct}
           onClose={handleCloseModalProduct}
+          onOpenFilter={handleOpenModalFilter}
         />
       </main>
       <footer className="mt-10 bg-gray-900">

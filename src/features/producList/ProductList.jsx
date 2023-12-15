@@ -6,6 +6,7 @@ import {
   Loader2Icon,
   PlusIcon,
   SearchIcon,
+  SlidersHorizontalIcon,
   StarIcon,
   XIcon,
 } from 'lucide-react';
@@ -25,7 +26,7 @@ import {
 
 const BASE_URL = import.meta.env.VITE_API_KEY;
 
-function ProductList({ onOpen, onClose }) {
+function ProductList({ onOpen, onClose, onOpenFilter }) {
   const { productItems, loading, categories, error } = useSelector(
     (state) => state.product
   );
@@ -66,6 +67,10 @@ function ProductList({ onOpen, onClose }) {
   const handleCloseModalProduct = () => {
     setIsOpenModalProduct(false);
     onClose();
+  };
+
+  const handleToggleFilter = () => {
+    onOpenFilter();
   };
 
   const filteredProducts = useMemo(() => {
@@ -146,25 +151,45 @@ function ProductList({ onOpen, onClose }) {
           ))}
         </div>
         <div className="">
-          <div className="relative">
-            <input
-              type="text"
-              className="w-full pl-9 pr-4 py-2 rounded-full border border-gray-200 focus:outline-none focus:ring-2 focus:ring-lime-500 focus:border-transparent text-sm"
-              placeholder="Search"
-              value={search}
-              onChange={handleSearch}
-            />
-            <SearchIcon
-              size={18}
-              className="stroke-gray-400 absolute top-1/2 left-3 transform -translate-y-1/2 pointer-events-none"
-            />
-            {search && (
-              <XIcon
-                size={15}
-                className="stroke-gray-400 absolute top-1/2 right-3 transform -translate-y-1/2 cursor-pointer hover:stroke-gray-500"
-                onClick={() => dispatch(setSearch(''))}
+          <div className="flex items-center space-x-2.5">
+            <div className="relative w-full">
+              <input
+                type="text"
+                className="w-full pl-9 pr-4 py-2 rounded-full border border-gray-200 focus:outline-none focus:ring-2 focus:ring-lime-500 focus:border-transparent text-sm"
+                placeholder="Search"
+                value={search}
+                onChange={handleSearch}
               />
-            )}
+              <SearchIcon
+                size={18}
+                className="stroke-gray-400 absolute top-1/2 left-3 transform -translate-y-1/2 pointer-events-none"
+              />
+              {search && (
+                <XIcon
+                  size={15}
+                  className="stroke-gray-400 absolute top-1/2 right-3 transform -translate-y-1/2 cursor-pointer hover:stroke-gray-500"
+                  onClick={() => dispatch(setSearch(''))}
+                />
+              )}
+            </div>
+            <div className="">
+              <button
+                className="relative w-[2.375rem] h-[2.375rem] flex items-center justify-center rounded-full bg-gray-900 hover:bg-lime-600 transition duration-100 ease-in-out"
+                type="button"
+                title="Filter"
+                onClick={handleToggleFilter}>
+                <SlidersHorizontalIcon
+                  strokeWidth={2.5}
+                  size={18}
+                  className="w-5 stroke-gray-100"
+                />
+                {sortBy !== 'relevance' ? (
+                  <div className="bg-red-500 rounded-full w-3.5 h-3.5 flex items-center justify-center absolute -top-px -right-0.75 border-2 border-white" />
+                ) : (
+                  ''
+                )}
+              </button>
+            </div>
           </div>
         </div>
       </div>
@@ -282,6 +307,7 @@ function ProductList({ onOpen, onClose }) {
 ProductList.propTypes = {
   onOpen: PropTypes.func.isRequired,
   onClose: PropTypes.func.isRequired,
+  onOpenFilter: PropTypes.func.isRequired,
 };
 
 export default ProductList;

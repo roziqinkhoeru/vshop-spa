@@ -1,21 +1,12 @@
-import {
-  BookHeartIcon,
-  ShoppingCartIcon,
-  SlidersHorizontalIcon,
-} from 'lucide-react';
+import { BookHeartIcon, ShoppingCartIcon } from 'lucide-react';
 import { useSelector } from 'react-redux';
 import { selectTotalItemCart } from '../features/cart/cartSlice';
 import PropTypes from 'prop-types';
 import { selectTotalWishlistItems } from '../features/wishlist/wishlistSlice';
 
-function Header({ onOpenCart, onOpenFilter, onOpenWishlist }) {
+function Header({ onOpenCart, onOpenWishlist }) {
   const totalCartItem = useSelector(selectTotalItemCart);
   const totalWishlistItem = useSelector(selectTotalWishlistItems);
-  const { sortBy } = useSelector((state) => state.filter.filters);
-
-  const handleToggleFilter = () => {
-    onOpenFilter();
-  };
 
   const handleToggleWishlist = () => {
     onOpenWishlist();
@@ -47,21 +38,6 @@ function Header({ onOpenCart, onOpenFilter, onOpenWishlist }) {
               <button
                 className="relative"
                 type="button"
-                title="Filter"
-                onClick={handleToggleFilter}>
-                <SlidersHorizontalIcon
-                  strokeWidth={2.5}
-                  className="w-5 stroke-gray-100"
-                />
-                {sortBy !== 'relevance' ? (
-                  <div className="bg-red-500 rounded-full w-3 h-3 flex items-center justify-center absolute -top-1 -right-1.5" />
-                ) : (
-                  ''
-                )}
-              </button>
-              <button
-                className="relative"
-                type="button"
                 title="wishlist"
                 onClick={handleToggleWishlist}>
                 <BookHeartIcon
@@ -69,7 +45,7 @@ function Header({ onOpenCart, onOpenFilter, onOpenWishlist }) {
                   className="w-5 stroke-gray-100"
                 />
                 {totalWishlistItem > 0 ? (
-                  <div className="bg-red-500 rounded-full w-3 h-3 flex items-center justify-center absolute -top-1 -right-1.5" />
+                  <div className="bg-red-500 rounded-full w-4 h-4 flex items-center justify-center absolute -top-1.5 -right-2 border-[3px] border-gray-800" />
                 ) : (
                   ''
                 )}
@@ -84,7 +60,7 @@ function Header({ onOpenCart, onOpenFilter, onOpenWishlist }) {
                   className="w-5 stroke-gray-100"
                 />
                 {totalCartItem > 0 ? (
-                  <div className="bg-red-500 rounded-full w-4.5 h-4.5 flex items-center justify-center absolute -top-2.5 -right-2.5">
+                  <div className="bg-red-500 rounded-full w-5.5 h-5.5 flex items-center justify-center absolute -top-2.5 -right-2.5 border-[3px] border-gray-800">
                     <span className="text-white text-2xs font-medium">
                       {totalCartItem}
                     </span>{' '}
@@ -103,7 +79,6 @@ function Header({ onOpenCart, onOpenFilter, onOpenWishlist }) {
 
 Header.propTypes = {
   onOpenCart: PropTypes.func.isRequired,
-  onOpenFilter: PropTypes.func.isRequired,
   onOpenWishlist: PropTypes.func.isRequired,
 };
 

@@ -28,7 +28,7 @@ function WishlistModal({ onClose, onOpenCart }) {
   return (
     <Modal onClose={onClose}>
       <div className="w-full relative">
-        <div className="px-5 overflow-y-auto h-[54vh] md:h-[54vh]">
+        <div className="px-5 overflow-y-auto h-[65vh] md:h-[54vh]">
           <div className="h-full">
             <div className="absolute -top-[2.375rem] left-0 w-full">
               <h5 className="text-center font-bold">Wishlist</h5>
