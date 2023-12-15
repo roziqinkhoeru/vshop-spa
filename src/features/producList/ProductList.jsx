@@ -238,9 +238,9 @@ function ProductList({ onOpen, onClose, onOpenFilter }) {
                       className="w-full h-full object-contain object-center"
                     />
                   </figure>
-                  <p className="capitalize text-xs text-gray-500 mb-0.5 mobile:mb-1">
+                  <span className="block capitalize text-xs text-gray-500 mb-0.5 mobile:mb-1">
                     {product?.category}
-                  </p>
+                  </span>
                   <h6 className="mb-2 mobile:mb-2.5 text-xs font-bold text-gray-700 line-clamp-2 hover:line-clamp-none">
                     {product?.title}
                   </h6>
