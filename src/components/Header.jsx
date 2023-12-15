@@ -6,9 +6,11 @@ import {
 import { useSelector } from 'react-redux';
 import { selectTotalItemCart } from '../features/cart/cartSlice';
 import PropTypes from 'prop-types';
+import { selectTotalWishlistItems } from '../features/wishlist/wishlistSlice';
 
 function Header({ onOpenCart, onOpenFilter, onOpenWishlist }) {
   const totalCartItem = useSelector(selectTotalItemCart);
+  const totalWishlistItem = useSelector(selectTotalWishlistItems);
   const { sortBy } = useSelector((state) => state.filter.filters);
 
   const handleToggleFilter = () => {
@@ -66,7 +68,7 @@ function Header({ onOpenCart, onOpenFilter, onOpenWishlist }) {
                   strokeWidth={2.5}
                   className="w-5 stroke-gray-100"
                 />
-                {sortBy !== 'relevance' ? (
+                {totalWishlistItem > 0 ? (
                   <div className="bg-red-500 rounded-full w-3 h-3 flex items-center justify-center absolute -top-1 -right-1.5" />
                 ) : (
                   ''

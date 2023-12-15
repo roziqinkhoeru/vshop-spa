@@ -119,7 +119,10 @@ function App() {
       ) : null}
       {isOpenModalFilter ? <Filter onClose={handleCloseModalFilter} /> : null}
       {isOpenModalWishlist ? (
-        <WishlistModal onClose={handleCloseModalWishlist} />
+        <WishlistModal
+          onClose={handleCloseModalWishlist}
+          onOpenCart={handleOpenModalCart}
+        />
       ) : null}
     </div>
   );
