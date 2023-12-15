@@ -1,20 +1,23 @@
+import React, { useEffect, useState } from 'react';
 import ReactDOM from 'react-dom';
 import PropTypes from 'prop-types';
-import { useEffect, useState } from 'react';
 
-const BackdropOverlay = ({ onClose }) => {
+function BackdropOverlay({ onClose }) {
   const handleClose = () => {
     onClose();
   };
   return (
     <div
+      role="presentation"
       className="fixed inset-0 bg-black bg-opacity-50 z-50 backdrop-blur-sm"
       onClick={handleClose}
     />
   );
-};
+}
 
-const ModalOverlay = ({ children, showModal, desktopView, onClose }) => {
+function ModalOverlay({
+  children, showModal, desktopView, onClose,
+}) {
   const handleClose = () => {
     onClose();
   };
@@ -31,17 +34,21 @@ const ModalOverlay = ({ children, showModal, desktopView, onClose }) => {
         desktopView ? desktopViewClass : mobileViewClass
       }`}
       onClick={handleClose}
-      tabIndex={-1}>
+      role="presentation"
+      tabIndex={-1}
+    >
       <div
         className={`bg-white pt-14 pb-5 ${
           desktopView ? 'rounded-xl w-[32rem]' : 'rounded-t-2xl w-full'
         }`}
-        onClick={(e) => e.stopPropagation()}>
+        role="presentation"
+        onClick={(e) => e.stopPropagation()}
+      >
         {children}
       </div>
     </div>
   );
-};
+}
 
 const modalRootElement = document.getElementById('modal-root');
 
@@ -72,16 +79,17 @@ function Modal({ children, onClose }) {
     <>
       {ReactDOM.createPortal(
         <BackdropOverlay onClose={onClose} />,
-        modalRootElement
+        modalRootElement,
       )}
       {ReactDOM.createPortal(
         <ModalOverlay
           showModal={showModal}
           desktopView={isDesktopView}
-          onClose={onClose}>
+          onClose={onClose}
+        >
           {children}
         </ModalOverlay>,
-        modalRootElement
+        modalRootElement,
       )}
     </>
   );

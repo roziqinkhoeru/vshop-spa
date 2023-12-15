@@ -1,6 +1,8 @@
+import React, { useEffect, useState } from 'react';
 import ReactDOM from 'react-dom';
 import PropTypes from 'prop-types';
-import { useEffect, useState } from 'react';
+import { v4 as uuidv4 } from 'uuid';
+
 import { CheckIcon, ChevronDownIcon, CircleIcon } from 'lucide-react';
 import { useDispatch, useSelector } from 'react-redux';
 import {
@@ -11,23 +13,25 @@ import {
   selectTotalPrice,
 } from '../features/cart/cartSlice';
 
-const ModalOverlay = ({ children, showModal, showItem }) => {
+function ModalOverlay({ children, showModal, showItem }) {
   return (
     <div
       className={`fixed inset-0 w-full h-full min-h-screen overflow-y-auto z-[100] transition-all duration-300 ease-in-out bg-green-700 ${
         showModal ? 'opacity-100 scale-100' : 'opacity-0 scale-95'
-      }`}>
+      }`}
+    >
       <div className="w-full h-full flex items-center justify-center mt-8 mb-12">
         <div
           className={`mx-4 w-full md:w-96 max-w-[24rem] md:max-w-none ${
             showItem ? 'h-full py-5' : ''
-          }`}>
+          }`}
+        >
           {children}
         </div>
       </div>
     </div>
   );
-};
+}
 
 const checkoutRootElement = document.getElementById('checkout-root');
 
@@ -67,14 +71,16 @@ function Checkout({ closeCheckout, datetime }) {
       {ReactDOM.createPortal(
         <ModalOverlay
           showModal={showModal}
-          showItem={isOpenDropItem}>
+          showItem={isOpenDropItem}
+        >
           <h6 className="text-gray-50 font-bold text-lg pb-6 text-center pt-5">
             Checkout Receipt
           </h6>
           <div
             className={`bg-white rounded-t-2xl px-4 pb-5 py-6 relative ${
               isOpenDropItem ? 'mb-8' : 'mb-1'
-            }`}>
+            }`}
+          >
             <div className="relative text-center mb-4.5">
               <CircleIcon
                 size={84}
@@ -96,7 +102,8 @@ function Checkout({ closeCheckout, datetime }) {
             </p>
             <p className="text-gray-400 mb-2 text-center">Total Payment</p>
             <h4 className="font-bold text-center text-gray-800 text-3xl">
-              ${totalPrice.toFixed(2)}
+              $
+              {totalPrice.toFixed(2)}
             </h4>
             <div className="relative">
               <hr className="mt-4 mb-3 border-gray-200 border-dashed border-[1.5px]" />
@@ -119,18 +126,25 @@ function Checkout({ closeCheckout, datetime }) {
                   <div className="flex items-center justify-between">
                     <div className="">
                       <p className="text-base text-gray-800 mb-0.5 font-semibold">
-                        {totalItems} items
+                        {totalItems}
+                        {' '}
+                        items
                       </p>
                       <p className="text-gray-400 text-sm">
-                        {dateCheckout}{' '}
-                        <span className="text-gray-400 text-sm mx-1">.</span>{' '}
+                        {dateCheckout}
+                        {' '}
+                        <span className="text-gray-400 text-sm mx-1">.</span>
+                        {' '}
                         {timeCheckout}
                       </p>
                     </div>
                     <div className="">
                       <button
+                        type="button"
+                        aria-label="Open Checkout Item"
                         className="w-6 h-6 flex items-center justify-center rounded-lg bg-gray-100 hover:bg-gray-50"
-                        onClick={() => setIsOpenDropItem(!isOpenDropItem)}>
+                        onClick={() => setIsOpenDropItem(!isOpenDropItem)}
+                      >
                         <ChevronDownIcon
                           size={18}
                           className={`stroke-gray-700 transition-transform transform duration-200 ease-in-out ${
@@ -147,7 +161,8 @@ function Checkout({ closeCheckout, datetime }) {
                   {checkoutItems?.map((product) => (
                     <div
                       className="flex"
-                      key={product?.id}>
+                      key={product?.id}
+                    >
                       <div className="">
                         <figure className="flex items-center justify-center w-8 h-8 rounded-md bg-white p-1 mr-2">
                           <img
@@ -162,7 +177,10 @@ function Checkout({ closeCheckout, datetime }) {
                           {product?.title}
                         </p>
                         <p className="text-xs text-gray-500">
-                          {product?.quantity} x ${product?.price.toFixed(2)}
+                          {product?.quantity}
+                          {' '}
+                          x $
+                          {product?.price.toFixed(2)}
                         </p>
                       </div>
                     </div>
@@ -171,27 +189,35 @@ function Checkout({ closeCheckout, datetime }) {
               )}
             </div>
             <p className="text-sm mb-6 text-gray-600 text-center">
-              Complete your payment and you will obtain{' '}
+              Complete your payment and you will obtain
+              {' '}
               <span className="font-semibold text-green-700">
-                {totalPoints} points.
+                {totalPoints}
+                {' '}
+                points.
               </span>
             </p>
             <button
+              type="button"
               className="bg-green-500 text-gray-100 font-bold w-full px-6 py-3.5 rounded-xl text-center leading-normal text-sm hover:bg-green-600 transition duration-100 ease-in-out disabled:bg-emerald-200 disabled:cursor-not-allowed mb-5"
-              onClick={handleCheckout}>
+              onClick={handleCheckout}
+            >
               Done
             </button>
             <p
               className="text-center text-emerald-500 font-semibold mb-2 cursor-pointer hover:text-emerald-600"
-              role="button"
-              onClick={handleCheckout}>
+              onKeyDown={(e) => e.key === 'Enter' && handleCheckout()}
+              role="presentation"
+              aria-label="Shop More"
+              onClick={handleCheckout}
+            >
               Shop More
             </p>
             <div className="absolute -bottom-4 left-2.5 right-2.5">
               <div className="flex items-center justify-center space-x-1">
-                {[...Array(13)].map((_, index) => (
+                {[...Array(13)].map(() => (
                   <div
-                    key={index}
+                    key={uuidv4()}
                     className="w-6 h-6 rounded-full bg-green-700"
                   />
                 ))}
@@ -199,7 +225,7 @@ function Checkout({ closeCheckout, datetime }) {
             </div>
           </div>
         </ModalOverlay>,
-        checkoutRootElement
+        checkoutRootElement,
       )}
     </>
   );
@@ -212,7 +238,7 @@ ModalOverlay.propTypes = {
 };
 Checkout.propTypes = {
   closeCheckout: PropTypes.func.isRequired,
-  datetime: PropTypes.object.isRequired,
+  datetime: PropTypes.instanceOf(Date).isRequired,
 };
 
 export default Checkout;

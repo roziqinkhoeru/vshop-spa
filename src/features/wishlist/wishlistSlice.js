@@ -24,7 +24,7 @@ const saveWishlistToStorage = (wishlistData) => {
   try {
     const encryptedData = CryptoJS.AES.encrypt(
       JSON.stringify(wishlistData),
-      ENCRYPTION_KEY
+      ENCRYPTION_KEY,
     ).toString();
     localStorage.setItem('vWishlist', encryptedData);
   } catch (error) {
@@ -43,7 +43,7 @@ export const wishlistSlice = createSlice({
     addItemToWishlist: (state, action) => {
       const newItem = action.payload;
       const selectWishlistIndex = state.wishlistItems.findIndex(
-        (product) => product.id === newItem.id
+        (product) => product.id === newItem.id,
       );
       if (selectWishlistIndex !== -1) {
         state.wishlistItems.splice(selectWishlistIndex, 1);
@@ -55,7 +55,7 @@ export const wishlistSlice = createSlice({
     removeItemFromWishlist: (state, action) => {
       const targetId = action.payload.id;
       const selectWishlistIndex = state.wishlistItems.findIndex(
-        (product) => product.id === targetId
+        (product) => product.id === targetId,
       );
       if (selectWishlistIndex !== -1) {
         state.wishlistItems.splice(selectWishlistIndex, 1);
@@ -65,11 +65,9 @@ export const wishlistSlice = createSlice({
   },
 });
 
-export const { addItemToWishlist, removeItemFromWishlist } =
-  wishlistSlice.actions;
+export const { addItemToWishlist, removeItemFromWishlist } = wishlistSlice.actions;
 
 export const selectWishlistItems = (state) => state.wishlist.wishlistItems;
-export const selectTotalWishlistItems = (state) =>
-  state.wishlist.wishlistItems.length;
+export const selectTotalWishlistItems = (state) => state.wishlist.wishlistItems.length;
 
 export default wishlistSlice.reducer;

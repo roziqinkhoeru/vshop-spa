@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import React, { useState } from 'react';
 import Header from './components/Header';
 import Checkout from './components/Checkout';
 import ProductList from './features/producList/ProductList';
@@ -48,11 +48,11 @@ function App() {
 
   const bodyApp = document.querySelector('body');
   if (
-    isOpenModalCart ||
-    isOpenModalProduct ||
-    isCheckout ||
-    isOpenModalFilter ||
-    isOpenModalWishlist
+    isOpenModalCart
+    || isOpenModalProduct
+    || isCheckout
+    || isOpenModalFilter
+    || isOpenModalWishlist
   ) {
     bodyApp.classList.add('overflow-hidden');
   } else {
@@ -62,14 +62,15 @@ function App() {
   return (
     <div
       className={
-        isOpenModalCart ||
-        isOpenModalProduct ||
-        isCheckout ||
-        isOpenModalFilter ||
-        isOpenModalWishlist
+        isOpenModalCart
+        || isOpenModalProduct
+        || isCheckout
+        || isOpenModalFilter
+        || isOpenModalWishlist
           ? 'overflow-hidden'
           : ''
-      }>
+      }
+    >
       <Header
         onOpenCart={handleOpenModalCart}
         onOpenWishlist={handleOpenModalWishlist}
@@ -87,19 +88,24 @@ function App() {
       <footer className="mt-10 bg-gray-900">
         <div className="container max-w-7xl mx-auto px-5 sm:px-6 py-4">
           <p className="text-center text-slate-200 text-sm">
-            Made with{' '}
+            Made with
+            {' '}
             <span
               role="img"
-              aria-label="love">
+              aria-label="love"
+            >
               ❤️
-            </span>{' '}
-            by{' '}
+            </span>
+            {' '}
+            by
+            {' '}
             <a
               href="https://github.com/roziqinkhoeru"
               className="text-lime-500 hover:text-lime-600 transition duration-100 ease-in-out"
               target="_blank"
               rel="noopener noreferrer"
-              title="Khoeru Roziqin">
+              title="Khoeru Roziqin"
+            >
               Khoeru Roziqin
             </a>
           </p>

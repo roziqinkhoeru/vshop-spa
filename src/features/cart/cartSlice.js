@@ -24,7 +24,7 @@ const saveCartToStorage = (cartData) => {
   try {
     const encryptedData = CryptoJS.AES.encrypt(
       JSON.stringify(cartData),
-      ENCRYPTION_KEY
+      ENCRYPTION_KEY,
     ).toString();
     localStorage.setItem('vCart', encryptedData);
   } catch (error) {
@@ -44,7 +44,7 @@ export const cartSlice = createSlice({
     addItemToCart: (state, action) => {
       const newItem = action.payload;
       const selectCartIndex = state.cartItems.findIndex(
-        (product) => product.id === newItem.id
+        (product) => product.id === newItem.id,
       );
       const countItem = newItem.quantity ? newItem.quantity : 1;
       const countPrice = newItem.totalPrice
@@ -53,12 +53,9 @@ export const cartSlice = createSlice({
       const countPoint = newItem.point ? newItem.point : newItem.id;
 
       if (selectCartIndex !== -1) {
-        state.cartItems[selectCartIndex].quantity =
-          state.cartItems[selectCartIndex].quantity + countItem;
-        state.cartItems[selectCartIndex].totalPrice =
-          state.cartItems[selectCartIndex].quantity * newItem.price;
-        state.cartItems[selectCartIndex].point =
-          state.cartItems[selectCartIndex].quantity * newItem.id;
+        state.cartItems[selectCartIndex].quantity += countItem;
+        state.cartItems[selectCartIndex].totalPrice = state.cartItems[selectCartIndex].quantity * newItem.price;
+        state.cartItems[selectCartIndex].point = state.cartItems[selectCartIndex].quantity * newItem.id;
       } else {
         state.cartItems.push({
           ...newItem,
@@ -72,18 +69,16 @@ export const cartSlice = createSlice({
     minusItemFromCart: (state, action) => {
       const targetId = action.payload.id;
       const selectCartIndex = state.cartItems.findIndex(
-        (product) => product.id === targetId
+        (product) => product.id === targetId,
       );
       if (selectCartIndex !== -1) {
         if (state.cartItems[selectCartIndex].quantity > 1) {
           state.cartItems[selectCartIndex].quantity -= 1;
-          state.cartItems[selectCartIndex].totalPrice =
-            state.cartItems[selectCartIndex].quantity * action.payload.price;
-          state.cartItems[selectCartIndex].point =
-            state.cartItems[selectCartIndex].quantity * action.payload.id;
+          state.cartItems[selectCartIndex].totalPrice = state.cartItems[selectCartIndex].quantity * action.payload.price;
+          state.cartItems[selectCartIndex].point = state.cartItems[selectCartIndex].quantity * action.payload.id;
         } else {
           state.cartItems = state.cartItems.filter(
-            (item) => item.id !== targetId
+            (item) => item.id !== targetId,
           );
         }
       }
@@ -113,9 +108,6 @@ export default cartSlice.reducer;
 
 // selector
 export const selectCartItems = (state) => state.cart.cartItems;
-export const selectTotalItemCart = (state) =>
-  state.cart.cartItems.reduce((total, item) => total + item.quantity, 0);
-export const selectTotalPrice = (state) =>
-  state.cart.cartItems.reduce((total, item) => total + item.totalPrice, 0);
-export const selectTotalPoint = (state) =>
-  state.cart.cartItems.reduce((total, item) => total + item.point, 0);
+export const selectTotalItemCart = (state) => state.cart.cartItems.reduce((total, item) => total + item.quantity, 0);
+export const selectTotalPrice = (state) => state.cart.cartItems.reduce((total, item) => total + item.totalPrice, 0);
+export const selectTotalPoint = (state) => state.cart.cartItems.reduce((total, item) => total + item.point, 0);

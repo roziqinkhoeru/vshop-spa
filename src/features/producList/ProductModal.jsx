@@ -1,5 +1,6 @@
+import React, { useEffect, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import PropTypes from 'prop-types';
-import Modal from '../../components/Modal';
 import {
   ChevronLeftIcon,
   HeartIcon,
@@ -7,9 +8,8 @@ import {
   PlusIcon,
   StarIcon,
 } from 'lucide-react';
-import { useDispatch, useSelector } from 'react-redux';
 import { addItemToCart } from '../cart/cartSlice';
-import { useEffect, useState } from 'react';
+import Modal from '../../components/Modal';
 import {
   addItemToWishlist,
   selectWishlistItems,
@@ -20,33 +20,31 @@ function ProductModal({ onClose, product }) {
   const wishlistItems = useSelector(selectWishlistItems);
   const [selectedProduct, setSelectedProduct] = useState(null);
 
-  const handleAddToCart = (product) => {
-    dispatch(addItemToCart(product));
+  const handleAddToCart = (item) => {
+    dispatch(addItemToCart(item));
     onClose();
   };
 
-  const handleAddItemCart = (product) => {
+  const handleAddItemCart = (item) => {
     setSelectedProduct({
-      ...product,
-      quantity: product.quantity + 1,
-      totalPrice: product.price * (product.quantity + 1),
-      point: product.point * (product.quantity + 1),
+      ...item,
+      quantity: item.quantity + 1,
+      totalPrice: item.price * (item.quantity + 1),
+      point: item.point * (item.quantity + 1),
     });
   };
-  const handleMinusItemCart = (product) => {
+  const handleMinusItemCart = (item) => {
     setSelectedProduct({
-      ...product,
-      quantity: product.quantity - 1,
-      totalPrice: product.price * (product.quantity - 1),
-      point: product.point * (product.quantity - 1),
+      ...item,
+      quantity: item.quantity - 1,
+      totalPrice: item.price * (item.quantity - 1),
+      point: item.point * (item.quantity - 1),
     });
   };
-  const handleWishlist = (product) => {
-    dispatch(addItemToWishlist(product));
+  const handleWishlist = (item) => {
+    dispatch(addItemToWishlist(item));
   };
-  const isWishlistProduct = (product) => {
-    return wishlistItems.some((item) => item.id === product.id);
-  };
+  const isWishlistProduct = (productItem) => wishlistItems.some((item) => item.id === productItem.id);
 
   useEffect(() => {
     setSelectedProduct(product);
@@ -62,8 +60,11 @@ function ProductModal({ onClose, product }) {
             </div>
             <div className="absolute -top-10 left-3 z-[101]">
               <button
+                type="button"
+                aria-label="Close Detail Product"
                 className="w-7 h-7 bg-gray-100 rounded-md flex items-center justify-center hover:bg-gray-200 transition duration-100 ease-in-out"
-                onClick={onClose}>
+                onClick={onClose}
+              >
                 <ChevronLeftIcon size={20} />
               </button>
             </div>
@@ -115,9 +116,12 @@ function ProductModal({ onClose, product }) {
               <h6 className="font-semibold mr-4 text-sm">Quantity</h6>
               <div className="flex items-center border border-gray-300 rounded-full overflow-hidden">
                 <button
+                  type="button"
+                  aria-label="Minus Item Cart"
                   className="px-3 py-2 leading-normal stroke-gray-800 disabled:cursor-not-allowed disabled:stroke-gray-300"
                   onClick={() => handleMinusItemCart(selectedProduct)}
-                  disabled={selectedProduct?.quantity <= 1}>
+                  disabled={selectedProduct?.quantity <= 1}
+                >
                   <MinusIcon
                     size={14}
                     strokeWidth={3}
@@ -126,8 +130,11 @@ function ProductModal({ onClose, product }) {
                 </button>
                 <p className="text-sm">{selectedProduct?.quantity}</p>
                 <button
+                  type="button"
+                  aria-label="Plus Item Cart"
                   className="px-3 py-1.5 leading-normal"
-                  onClick={() => handleAddItemCart(selectedProduct)}>
+                  onClick={() => handleAddItemCart(selectedProduct)}
+                >
                   <PlusIcon
                     size={14}
                     strokeWidth={3}
@@ -140,10 +147,16 @@ function ProductModal({ onClose, product }) {
         <div className="sticky md:static inset-x-0 bottom-0">
           <div className="border-t border-gray-200 px-5 pt-5">
             <button
+              type="button"
+              aria-label="Add to Cart"
               className="bg-gray-900 text-gray-100 font-bold w-full px-6 py-3.5 rounded-xl text-center leading-normal text-sm hover:bg-lime-600 transition duration-100 ease-in-out disabled:bg-gray-400 disabled:cursor-not-allowed"
-              onClick={() => handleAddToCart(selectedProduct)}>
-              Add to Cart{' '}
-              <span className="text-gray-200 font-normal mx-1.5">|</span> $
+              onClick={() => handleAddToCart(selectedProduct)}
+            >
+              Add to Cart
+              {' '}
+              <span className="text-gray-200 font-normal mx-1.5">|</span>
+              {' '}
+              $
               {selectedProduct?.totalPrice.toFixed(2)}
             </button>
           </div>
@@ -155,7 +168,18 @@ function ProductModal({ onClose, product }) {
 
 ProductModal.propTypes = {
   onClose: PropTypes.func.isRequired,
-  product: PropTypes.object.isRequired,
+  product: PropTypes.shape({
+    id: PropTypes.number,
+    title: PropTypes.string,
+    price: PropTypes.number,
+    description: PropTypes.string,
+    category: PropTypes.string,
+    image: PropTypes.string,
+    rating: PropTypes.shape({
+      rate: PropTypes.number,
+      count: PropTypes.number,
+    }),
+  }).isRequired,
 };
 
 export default ProductModal;
