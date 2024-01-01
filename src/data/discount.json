@@ -1,0 +1,24 @@
+{
+	"discounts": [
+		{
+			"code": "RTKPRO",
+			"value": 15
+		},
+		{
+			"code": "KHROZ7",
+			"value": 20
+		},
+		{
+			"code": "BIGSALE",
+			"value": 30
+		},
+		{
+			"code": "DEAFRIZAL",
+			"value": 50
+		},
+		{
+			"code": "NEWYEAR",
+			"value": 75
+		}
+	]
+}
