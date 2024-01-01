@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import {
   ChevronLeftIcon,
   MinusIcon,
@@ -11,14 +11,20 @@ import PropTypes from 'prop-types';
 import Modal from '../../components/Modal';
 import {
   addItemToCart,
+  discountApply,
   minusItemFromCart,
+  removeDiscount,
   removeItemFromCart,
   selectCartItems,
+  selectDiscountAmount,
+  selectDiscountCode,
+  selectDiscountValue,
   selectTotalItemCart,
   selectTotalPoint,
   selectTotalPrice,
 } from './cartSlice';
 import cartImg from '../../assets/img/cart-empty.png';
+import discountData from '../../data/discount.json';
 
 function CartModal({ onClose, onCheckout }) {
   const dispatch = useDispatch();
@@ -26,6 +32,12 @@ function CartModal({ onClose, onCheckout }) {
   const totalPrice = useSelector(selectTotalPrice);
   const totalPoint = useSelector(selectTotalPoint);
   const totalItem = useSelector(selectTotalItemCart);
+  const discountCode = useSelector(selectDiscountCode);
+  const discountValue = useSelector(selectDiscountValue);
+  const discountAmount = useSelector(selectDiscountAmount);
+  const [totalPriceDiscount, setTotalPriceDiscount] = useState(totalPrice);
+  const [couponCode, setCouponCode] = useState('');
+  const [couponSubmit, setCouponSubmit] = useState(false);
 
   const handleAddItemCart = (product) => {
     const selectedProduct = { ...product, quantity: 1 };
@@ -40,6 +52,23 @@ function CartModal({ onClose, onCheckout }) {
     dispatch(removeItemFromCart(id));
   };
 
+  const handleDiscount = () => {
+    setCouponSubmit(true);
+    const code = couponCode.toUpperCase();
+    const discount = discountData.discounts.find((item) => item.code === code);
+    if (discount) {
+      dispatch(discountApply(discount));
+      setTotalPriceDiscount(totalPrice - (totalPrice * discount.value) / 100);
+    }
+  };
+
+  const handleDiscountRemove = () => {
+    setCouponCode('');
+    setCouponSubmit(false);
+    setTotalPriceDiscount(totalPrice);
+    dispatch(removeDiscount());
+  };
+
   const handleCheckout = () => {
     if (selectTotalItemCart === 0) return;
     const phone = '6282314950438';
@@ -47,9 +76,7 @@ function CartModal({ onClose, onCheckout }) {
       `Halo Admin,\nSaya ingin melakukan checkout untuk pembelian barang-barang berikut:
       ${cartItems?.map(
     (product, index) => `\n[${index + 1}] ${product?.title} (*Qty: ${product?.quantity}*)`,
-  )}\n\nTotal Barang: *${totalItem}*\nTotal Pembelian: *$${totalPrice.toFixed(
-  2,
-)} USD*\n\nMohon bantu konfirmasi ketersediaan stok dan informasi lanjut untuk proses pembayaran. Terima kasih! 
+  )}\n\nTotal Barang: *${totalItem}*\nSubtotal: *$${totalPrice.toFixed(2)} USD*\nDiskon: *$${discountAmount.toFixed(2)} USD* (${discountValue}%)\nTotal Pembelian: *$${totalPriceDiscount.toFixed(2)} USD*\n\nMohon bantu konfirmasi ketersediaan stok dan informasi lanjut untuk proses pembayaran. Terima kasih! 
       `,
     );
     const URL_CHECKOUT = `https://api.whatsapp.com/send?phone=${phone}&text=${message}`;
@@ -176,20 +203,64 @@ function CartModal({ onClose, onCheckout }) {
             <div className="relative mb-4 mt-4.5">
               <input
                 type="text"
-                className="w-full pr-4 py-3 rounded-full pl-12 text-sm bg-gray-100 focus:outline-none focus:bg-gray-100 transition duration-100 ease-in-out font-semibold uppercase text-gray-700"
+                className={`${discountCode === '' && couponSubmit ? 'border-red-500 bg-red-50' : 'border-transparent bg-gray-100'} border-2 w-full pr-4 py-3 rounded-full pl-12 text-sm focus:outline-none focus:bg-gray-100 transition duration-100 ease-in-out font-semibold uppercase text-gray-700`}
                 placeholder="Add coupon code"
-                disabled={totalItem === 0}
+                value={couponCode}
+                onChange={(e) => setCouponCode(e.target.value)}
+                disabled={totalItem === 0 || couponSubmit}
               />
               <TicketIcon
                 size={22}
-                className="absolute top-3 left-4 stroke-gray-400"
+                className="absolute top-[13px] left-4 stroke-gray-400"
               />
+              <div className={`${couponCode.length > 0 && !couponSubmit ? 'block' : 'hidden'} absolute top-[7.5px] right-2`}>
+                <button aria-label="Apply Coupon" type="button" onClick={handleDiscount} className="bg-gray-900 text-gray-100 font-bold px-4 py-1.5 rounded-full text-center leading-normal text-sm hover:bg-lime-600 transition duration-100 ease-in-out disabled:bg-gray-400 disabled:cursor-not-allowed">Apply</button>
+              </div>
+              <div className={`${discountCode === '' && couponSubmit ? 'block' : 'hidden'} absolute top-3 right-3`}>
+                <button aria-label="Clear Field" type="button" onClick={handleDiscountRemove} className="bg-gray-900 text-gray-100 font-bold w-6 h-6 flex justify-center items-center rounded-full text-center leading-normal text-sm hover:bg-lime-600 transition duration-100 ease-in-out disabled:bg-gray-400 disabled:cursor-not-allowed">
+                  <XIcon size={14} className="stroke-gray-100" />
+                </button>
+              </div>
+              <div className={`${discountCode !== '' && couponSubmit ? 'block' : 'hidden'} absolute top-2 right-2`}>
+                <button aria-label="Remove Coupon" type="button" onClick={handleDiscountRemove} className="bg-lime-500 text-gray-100 font-bold pl-3 pr-1.5 py-1 flex items-center rounded-full text-center leading-normal text-sm hover:bg-gray-900 transition duration-100 ease-in-out disabled:bg-gray-400 disabled:cursor-not-allowed space-x-2">
+                  <span className="text-sm text-gray-100">
+                    -
+                    {discountValue}
+                    %
+                  </span>
+                  <div className="w-6 h-6 flex items-center justify-center bg-gray-100/30 rounded-full ml-1"><XIcon size={14} className="stroke-gray-100" /></div>
+                </button>
+              </div>
             </div>
+            {discountCode !== '' && couponSubmit && (
+            <>
+              <div className="flex items-center justify-between mb-0.5">
+                <p className="text-sm">Subtotal</p>
+                <p className="font-bold text-sm">
+                  $
+                  {totalPrice.toFixed(2)}
+                  {' '}
+                  USD
+                </p>
+              </div>
+              <div className="flex items-center justify-between mb-1.5">
+                <p className="text-sm">
+                  Discount
+                </p>
+                <p className="font-bold text-sm text-lime-700">
+                  - $
+                  {discountAmount.toFixed(2)}
+                  {' '}
+                  USD
+                </p>
+              </div>
+            </>
+            )}
             <div className="flex items-center justify-between">
               <p className="">Total</p>
               <p className="font-bold text-lg">
                 $
-                {totalPrice.toFixed(2)}
+                {totalPriceDiscount.toFixed(2)}
                 {' '}
                 USD
               </p>
