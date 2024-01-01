@@ -30,7 +30,7 @@ function ProductModal({ onClose, product }) {
       ...item,
       quantity: item.quantity + 1,
       totalPrice: item.price * (item.quantity + 1),
-      point: item.point * (item.quantity + 1),
+      point: item.id * (item.quantity + 1),
     });
   };
   const handleMinusItemCart = (item) => {
@@ -38,7 +38,7 @@ function ProductModal({ onClose, product }) {
       ...item,
       quantity: item.quantity - 1,
       totalPrice: item.price * (item.quantity - 1),
-      point: item.point * (item.quantity - 1),
+      point: item.id * (item.quantity - 1),
     });
   };
   const handleWishlist = (item) => {

@@ -25,6 +25,7 @@ import {
 } from './cartSlice';
 import cartImg from '../../assets/img/cart-empty.png';
 import discountData from '../../data/discount.json';
+import numberFormat from '../../utils/numberFormat';
 
 function CartModal({ onClose, onCheckout }) {
   const dispatch = useDispatch();
@@ -269,7 +270,7 @@ function CartModal({ onClose, onCheckout }) {
               <span className="text-gray-400">
                 With this order you will earn
                 {' '}
-                {totalPoint}
+                {numberFormat.dotThree(totalPoint)}
                 {' '}
                 points
               </span>
