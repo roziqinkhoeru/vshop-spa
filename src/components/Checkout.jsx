@@ -8,6 +8,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import {
   clearCart,
   selectCartItems,
+  selectDiscountValue,
   selectTotalItemCart,
   selectTotalPoint,
   selectTotalPrice,
@@ -41,8 +42,10 @@ function Checkout({ closeCheckout, datetime }) {
   const totalPrice = useSelector(selectTotalPrice);
   const checkoutItems = useSelector(selectCartItems);
   const totalPoints = useSelector(selectTotalPoint);
+  const discountValue = useSelector(selectDiscountValue);
   const [showModal, setShowModal] = useState(false);
   const [isOpenDropItem, setIsOpenDropItem] = useState(false);
+  const totalPriceDiscount = totalPrice - ((totalPrice * discountValue) / 100);
   const dateCheckout = datetime?.toLocaleDateString('en-US', {
     month: 'short',
     day: 'numeric',
@@ -101,9 +104,13 @@ function Checkout({ closeCheckout, datetime }) {
               order.
             </p>
             <p className="text-gray-400 mb-2 text-center">Total Payment</p>
-            <h4 className="font-bold text-center text-gray-800 text-3xl">
+            <p className="text-gray-400 mb-0 text-center line-through">
               $
               {totalPrice.toFixed(2)}
+            </p>
+            <h4 className="font-bold text-center text-gray-800 text-3xl">
+              $
+              {totalPriceDiscount.toFixed(2)}
             </h4>
             <div className="relative">
               <hr className="mt-4 mb-3 border-gray-200 border-dashed border-[1.5px]" />
