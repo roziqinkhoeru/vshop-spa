@@ -2,6 +2,16 @@
 
 This project is a boilerplate for a React application using Vite as the build tool, Redux Toolkit for state management, and API key stored in a .env file for secure configuration.
 
+## Let's Try
+
+Open the vshop website, before buying goods apply the following promo code:
+
+- `DEAFRIZAL` to get 50%
+- `KHROZ7` to get 20%
+- `NEWYEAR` to get 75%
+- `RTKPRO` to get 15%
+- `BIGSALE` to get 30%
+
 ## Prerequisites
 
 Before you begin, ensure you have the following installed on your machine:
@@ -20,7 +30,7 @@ Before you begin, ensure you have the following installed on your machine:
 2. Navigate to the project directory:
 
    ```bash
-   cd your-project
+   cd vshop-spa
    ```
 
 3. Install dependencies
@@ -41,6 +51,7 @@ Before you begin, ensure you have the following installed on your machine:
 ## Development
 
 1. To start the development server, run:
+
    ```bash
    npm run dev
    ```
