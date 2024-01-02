@@ -266,7 +266,7 @@ function ProductList({ onOpen, onClose, onOpenFilter }) {
                   title="Add to cart"
                 >
                   $
-                  {product?.price}
+                  {product?.price.toFixed(2)}
                   <span className="absolute whitespace-nowrap text-gray-100 -z-10 text-center opacity-0 group-hover:z-10 group-hover:opacity-100 transition-all ease-in-out duration-[400ms] top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2">
                     Buy Now
                   </span>

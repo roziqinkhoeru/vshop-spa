@@ -204,7 +204,7 @@ function CartModal({ onClose, onCheckout }) {
             <div className="relative mb-4 mt-4.5">
               <input
                 type="text"
-                className={`${discountCode === '' && couponSubmit ? 'border-red-500 bg-red-50' : 'border-transparent bg-gray-100'} border-2 w-full pr-4 py-3 rounded-full pl-12 text-sm focus:outline-none focus:bg-gray-100 transition duration-100 ease-in-out font-semibold uppercase text-gray-700`}
+                className={`${discountCode === '' && couponSubmit ? 'border-red-500 bg-red-50 text-red-800' : 'border-transparent bg-gray-100 text-gray-700'} border-2 w-full pr-4 py-3 rounded-full pl-12 text-sm focus:outline-none focus:bg-gray-100 transition duration-100 ease-in-out font-semibold uppercase`}
                 placeholder="Add coupon code"
                 value={couponCode}
                 onChange={(e) => setCouponCode(e.target.value)}
@@ -212,7 +212,7 @@ function CartModal({ onClose, onCheckout }) {
               />
               <TicketIcon
                 size={22}
-                className="absolute top-[13px] left-4 stroke-gray-400"
+                className={`${discountCode === '' && couponSubmit ? 'stroke-red-400' : 'stroke-gray-400'} absolute top-[13px] left-4`}
               />
               <div className={`${couponCode.length > 0 && !couponSubmit ? 'block' : 'hidden'} absolute top-[7.5px] right-2`}>
                 <button aria-label="Apply Coupon" type="button" onClick={handleDiscount} className="bg-gray-900 text-gray-100 font-bold px-4 py-1.5 rounded-full text-center leading-normal text-sm hover:bg-lime-600 transition duration-100 ease-in-out disabled:bg-gray-400 disabled:cursor-not-allowed">Apply</button>
@@ -232,12 +232,21 @@ function CartModal({ onClose, onCheckout }) {
                   <div className="w-6 h-6 flex items-center justify-center bg-gray-100/30 rounded-full ml-1"><XIcon size={14} className="stroke-gray-100" /></div>
                 </button>
               </div>
+              {discountCode === '' && couponSubmit && (
+              <p className="text-sm mt-1 text-red-700">
+                Coupon code is invalid.
+                {' '}
+                <a href="https://github.com/roziqinkhoeru/vshop-spa" className="underline underline-offset-2" target="_blank" rel="noopener noreferrer">
+                  Get your coupon code
+                </a>
+              </p>
+              )}
             </div>
             {discountCode !== '' && couponSubmit && (
             <>
               <div className="flex items-center justify-between mb-0.5">
-                <p className="text-sm">Subtotal</p>
-                <p className="font-bold text-sm">
+                <p className="text-sm text-gray-500">Subtotal</p>
+                <p className="font-bold text-sm text-gray-500">
                   $
                   {totalPrice.toFixed(2)}
                   {' '}
@@ -245,10 +254,10 @@ function CartModal({ onClose, onCheckout }) {
                 </p>
               </div>
               <div className="flex items-center justify-between mb-1.5">
-                <p className="text-sm">
+                <p className="text-sm text-gray-500">
                   Discount
                 </p>
-                <p className="font-bold text-sm text-lime-700">
+                <p className="font-bold text-sm text-lime-600">
                   - $
                   {discountAmount.toFixed(2)}
                   {' '}
