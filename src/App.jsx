@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { Link } from 'react-router-dom';
 import Header from './components/Header';
 import Checkout from './components/Checkout';
 import ProductList from './features/producList/ProductList';
@@ -99,15 +100,15 @@ function App() {
             {' '}
             by
             {' '}
-            <a
-              href="https://github.com/roziqinkhoeru"
+            <Link
+              to="https://github.com/roziqinkhoeru"
               className="text-lime-500 hover:text-lime-600 transition duration-100 ease-in-out"
               target="_blank"
               rel="noopener noreferrer"
               title="Khoeru Roziqin"
             >
               Khoeru Roziqin
-            </a>
+            </Link>
           </p>
         </div>
       </footer>

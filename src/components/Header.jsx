@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import { BookHeartIcon, ShoppingCartIcon } from 'lucide-react';
 import { useSelector } from 'react-redux';
 import PropTypes from 'prop-types';
@@ -17,8 +18,8 @@ function Header({ onOpenCart, onOpenWishlist }) {
     <header className="bg-gray-800 fixed top-0 w-full z-50">
       <div className="container max-w-7xl mx-auto px-5 sm:px-6">
         <div className="flex items-center justify-between h-16 sm:h-[4.5rem]">
-          <a
-            href="/"
+          <Link
+            to="/"
             className="flex items-center text-gray-100 hover:scale-105 transition-all duration-100 ease-in-out"
           >
             <figure className="block mr-2">
@@ -31,7 +32,7 @@ function Header({ onOpenCart, onOpenWishlist }) {
             <span className="text-gray-100 font-bold text-xl hidden mobile:block">
               VShop
             </span>
-          </a>
+          </Link>
           <h5 className="font-bold text-lg text-gray-100 mobile:hidden">
             VShop
           </h5>

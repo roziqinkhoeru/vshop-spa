@@ -1,0 +1,5 @@
+- github repo
+- login func
+- oauth github
+- checkout redirect
+- page checkout

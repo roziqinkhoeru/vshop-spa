@@ -8,6 +8,7 @@ import {
 } from 'lucide-react';
 import { useDispatch, useSelector } from 'react-redux';
 import PropTypes from 'prop-types';
+import { Link } from 'react-router-dom';
 import Modal from '../../components/Modal';
 import {
   addItemToCart,
@@ -234,9 +235,9 @@ function CartModal({ onClose, onCheckout }) {
               <p className="text-sm mt-1 text-red-700">
                 Coupon code is invalid.
                 {' '}
-                <a href="https://github.com/roziqinkhoeru/vshop-spa" className="underline underline-offset-2" target="_blank" rel="noopener noreferrer">
+                <Link to="https://github.com/roziqinkhoeru/vshop-spa" className="underline underline-offset-2" target="_blank" rel="noopener noreferrer">
                   Get your coupon code
-                </a>
+                </Link>
               </p>
               )}
             </div>
