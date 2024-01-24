@@ -10,6 +10,7 @@ import {
 } from './wishlistSlice';
 import Modal from '../../components/Modal';
 import wishlistImg from '../../assets/img/package.png';
+import numberFormat from '../../utils/numberFormat';
 
 function WishlistModal({ onClose, onOpenCart }) {
   const dispatch = useDispatch();
@@ -102,7 +103,7 @@ function WishlistModal({ onClose, onOpenCart }) {
                       <div className="flex items-center justify-between">
                         <h6 className="font-semibold">
                           $
-                          {product?.price.toFixed(2)}
+                          {numberFormat.formatCurrency(product?.price)}
                           {' '}
                           USD
                         </h6>

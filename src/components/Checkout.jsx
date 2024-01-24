@@ -13,6 +13,7 @@ import {
   selectTotalPoint,
   selectTotalPrice,
 } from '../features/cart/cartSlice';
+import numberFormat from '../utils/numberFormat';
 
 function ModalOverlay({ children, showModal, showItem }) {
   return (
@@ -106,11 +107,11 @@ function Checkout({ closeCheckout, datetime }) {
             <p className="text-gray-400 mb-2 text-center">Total Payment</p>
             <p className="text-gray-400 mb-0 text-center line-through">
               $
-              {totalPrice.toFixed(2)}
+              {numberFormat.formatCurrency(totalPrice)}
             </p>
             <h4 className="font-bold text-center text-gray-800 text-3xl">
               $
-              {totalPriceDiscount.toFixed(2)}
+              {numberFormat.formatCurrency(totalPriceDiscount)}
             </h4>
             <div className="relative">
               <hr className="mt-4 mb-3 border-gray-200 border-dashed border-[1.5px]" />
@@ -187,7 +188,7 @@ function Checkout({ closeCheckout, datetime }) {
                           {product?.quantity}
                           {' '}
                           x $
-                          {product?.price.toFixed(2)}
+                          {numberFormat.formatCurrency(product?.price)}
                         </p>
                       </div>
                     </div>

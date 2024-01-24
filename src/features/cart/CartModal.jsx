@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useMemo, useState } from 'react';
 import {
   ChevronLeftIcon,
   MinusIcon,
@@ -16,16 +16,16 @@ import {
   removeDiscount,
   removeItemFromCart,
   selectCartItems,
-  selectDiscountAmount,
   selectDiscountCode,
+  selectDiscountIsApplied,
   selectDiscountValue,
   selectTotalItemCart,
   selectTotalPoint,
   selectTotalPrice,
 } from './cartSlice';
 import cartImg from '../../assets/img/cart-empty.png';
-import discountData from '../../data/discount.json';
 import numberFormat from '../../utils/numberFormat';
+import discountData from '../../data/discount.json';
 
 function CartModal({ onClose, onCheckout }) {
   const dispatch = useDispatch();
@@ -35,10 +35,10 @@ function CartModal({ onClose, onCheckout }) {
   const totalItem = useSelector(selectTotalItemCart);
   const discountCode = useSelector(selectDiscountCode);
   const discountValue = useSelector(selectDiscountValue);
-  const discountAmount = useSelector(selectDiscountAmount);
-  const [totalPriceDiscount, setTotalPriceDiscount] = useState(totalPrice);
+  const isDiscountApplied = useSelector(selectDiscountIsApplied);
   const [couponCode, setCouponCode] = useState('');
-  const [couponSubmit, setCouponSubmit] = useState(false);
+  const discountAmount = useMemo(() => (totalPrice * discountValue) / 100, [totalPrice, discountValue]);
+  const totalPriceDiscount = useMemo(() => totalPrice - discountAmount, [totalPrice, discountAmount]);
 
   const handleAddItemCart = (product) => {
     const selectedProduct = { ...product, quantity: 1 };
@@ -54,20 +54,18 @@ function CartModal({ onClose, onCheckout }) {
   };
 
   const handleDiscount = () => {
-    setCouponSubmit(true);
     const code = couponCode.toUpperCase();
     const discount = discountData.discounts.find((item) => item.code === code);
     if (discount) {
       dispatch(discountApply(discount));
-      setTotalPriceDiscount(totalPrice - (totalPrice * discount.value) / 100);
+    } else {
+      dispatch(discountApply({ code: '', value: 0 }));
     }
   };
 
   const handleDiscountRemove = () => {
-    setCouponCode('');
-    setCouponSubmit(false);
-    setTotalPriceDiscount(totalPrice);
     dispatch(removeDiscount());
+    setCouponCode('');
   };
 
   const handleCheckout = () => {
@@ -77,7 +75,7 @@ function CartModal({ onClose, onCheckout }) {
       `Halo Admin,\nSaya ingin melakukan checkout untuk pembelian barang-barang berikut:
       ${cartItems?.map(
     (product, index) => `\n[${index + 1}] ${product?.title} (*Qty: ${product?.quantity}*)`,
-  )}\n\nTotal Barang: *${totalItem}*\nSubtotal: *$${totalPrice.toFixed(2)} USD*\nDiskon: *$${discountAmount.toFixed(2)} USD* (${discountValue}%)\nTotal Pembelian: *$${totalPriceDiscount.toFixed(2)} USD*\n\nMohon bantu konfirmasi ketersediaan stok dan informasi lanjut untuk proses pembayaran. Terima kasih! 
+  )}\n\nTotal Barang: *${totalItem}*\nSubtotal: *$${numberFormat.formatCurrency(totalPrice)} USD*\nDiskon: *$ USD* (%)\nTotal Pembelian: *$ USD*\n\nMohon bantu konfirmasi ketersediaan stok dan informasi lanjut untuk proses pembayaran. Terima kasih! 
       `,
     );
     const URL_CHECKOUT = `https://api.whatsapp.com/send?phone=${phone}&text=${message}`;
@@ -162,7 +160,7 @@ function CartModal({ onClose, onCheckout }) {
                       <div className="flex items-center justify-between">
                         <h6 className="font-semibold">
                           $
-                          {product?.totalPrice.toFixed(2)}
+                          {numberFormat.formatCurrency(product?.totalPrice)}
                           {' '}
                           USD
                         </h6>
@@ -204,25 +202,25 @@ function CartModal({ onClose, onCheckout }) {
             <div className="relative mb-4 mt-4.5">
               <input
                 type="text"
-                className={`${discountCode === '' && couponSubmit ? 'border-red-500 bg-red-50 text-red-800' : 'border-transparent bg-gray-100 text-gray-700'} border-2 w-full pr-4 py-3 rounded-full pl-12 text-sm focus:outline-none focus:bg-gray-100 transition duration-100 ease-in-out font-semibold uppercase`}
+                className={`${discountCode === '' && isDiscountApplied ? 'border-red-500 bg-red-50 text-red-800' : 'border-transparent bg-gray-100 text-gray-700'} border-2 w-full pr-4 py-3 rounded-full pl-12 text-sm focus:outline-none focus:bg-gray-100 transition duration-100 ease-in-out font-semibold uppercase`}
                 placeholder="Add coupon code"
                 value={couponCode}
                 onChange={(e) => setCouponCode(e.target.value)}
-                disabled={totalItem === 0 || couponSubmit}
+                disabled={totalItem === 0 || isDiscountApplied}
               />
               <TicketIcon
                 size={22}
-                className={`${discountCode === '' && couponSubmit ? 'stroke-red-400' : 'stroke-gray-400'} absolute top-[13px] left-4`}
+                className={`${discountCode === '' && isDiscountApplied ? 'stroke-red-400' : 'stroke-gray-400'} absolute top-[13px] left-4`}
               />
-              <div className={`${couponCode.length > 0 && !couponSubmit ? 'block' : 'hidden'} absolute top-[7.5px] right-2`}>
+              <div className={`${couponCode.length > 0 && !isDiscountApplied ? 'block' : 'hidden'} absolute top-[7.5px] right-2`}>
                 <button aria-label="Apply Coupon" type="button" onClick={handleDiscount} className="bg-gray-900 text-gray-100 font-bold px-4 py-1.5 rounded-full text-center leading-normal text-sm hover:bg-lime-600 transition duration-100 ease-in-out disabled:bg-gray-400 disabled:cursor-not-allowed">Apply</button>
               </div>
-              <div className={`${discountCode === '' && couponSubmit ? 'block' : 'hidden'} absolute top-3 right-3`}>
+              <div className={`${discountCode === '' && isDiscountApplied ? 'block' : 'hidden'} absolute top-3 right-3`}>
                 <button aria-label="Clear Field" type="button" onClick={handleDiscountRemove} className="bg-gray-900 text-gray-100 font-bold w-6 h-6 flex justify-center items-center rounded-full text-center leading-normal text-sm hover:bg-lime-600 transition duration-100 ease-in-out disabled:bg-gray-400 disabled:cursor-not-allowed">
                   <XIcon size={14} className="stroke-gray-100" />
                 </button>
               </div>
-              <div className={`${discountCode !== '' && couponSubmit ? 'block' : 'hidden'} absolute top-2 right-2`}>
+              <div className={`${discountCode !== '' && isDiscountApplied ? 'block' : 'hidden'} absolute top-2 right-2`}>
                 <button aria-label="Remove Coupon" type="button" onClick={handleDiscountRemove} className="bg-lime-500 text-gray-100 font-bold pl-3 pr-1.5 py-1 flex items-center rounded-full text-center leading-normal text-sm hover:bg-gray-900 transition duration-100 ease-in-out disabled:bg-gray-400 disabled:cursor-not-allowed space-x-2">
                   <span className="text-sm text-gray-100">
                     -
@@ -232,7 +230,7 @@ function CartModal({ onClose, onCheckout }) {
                   <div className="w-6 h-6 flex items-center justify-center bg-gray-100/30 rounded-full ml-1"><XIcon size={14} className="stroke-gray-100" /></div>
                 </button>
               </div>
-              {discountCode === '' && couponSubmit && (
+              {discountCode === '' && isDiscountApplied && (
               <p className="text-sm mt-1 text-red-700">
                 Coupon code is invalid.
                 {' '}
@@ -242,15 +240,13 @@ function CartModal({ onClose, onCheckout }) {
               </p>
               )}
             </div>
-            {discountCode !== '' && couponSubmit && (
+            {discountCode !== '' && isDiscountApplied && (
             <>
               <div className="flex items-center justify-between mb-0.5">
                 <p className="text-sm text-gray-500">Subtotal</p>
                 <p className="font-bold text-sm text-gray-500">
                   $
-                  {totalPrice.toFixed(2)}
-                  {' '}
-                  USD
+                  {numberFormat.formatCurrency(totalPrice)}
                 </p>
               </div>
               <div className="flex items-center justify-between mb-1.5">
@@ -259,9 +255,7 @@ function CartModal({ onClose, onCheckout }) {
                 </p>
                 <p className="font-bold text-sm text-lime-600">
                   - $
-                  {discountAmount.toFixed(2)}
-                  {' '}
-                  USD
+                  {numberFormat.formatCurrency(discountAmount)}
                 </p>
               </div>
             </>
@@ -270,7 +264,7 @@ function CartModal({ onClose, onCheckout }) {
               <p className="">Total</p>
               <p className="font-bold text-lg">
                 $
-                {totalPriceDiscount.toFixed(2)}
+                {numberFormat.formatCurrency(totalPriceDiscount)}
                 {' '}
                 USD
               </p>

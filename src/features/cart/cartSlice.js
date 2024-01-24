@@ -35,9 +35,9 @@ const saveCartToStorage = (cartData) => {
 const initialState = {
   cartItems: loadCartFromStorage(),
   discount: {
+    isApplied: false,
     code: '',
     value: 0,
-    amount: 0,
   },
 };
 
@@ -100,19 +100,17 @@ export const cartSlice = createSlice({
     },
     discountApply: (state, action) => {
       const { code, value } = action.payload;
-      const totalPrice = state.cartItems.reduce((total, item) => total + item.totalPrice, 0);
-      const discountAmount = totalPrice * (value / 100);
       state.discount = {
+        isApplied: true,
         code,
         value,
-        amount: discountAmount,
       };
     },
     removeDiscount: (state) => {
       state.discount = {
+        isApplied: false,
         code: '',
         value: 0,
-        amount: 0,
       };
     },
   },
@@ -137,4 +135,4 @@ export const selectTotalPrice = (state) => state.cart.cartItems.reduce((total, i
 export const selectTotalPoint = (state) => state.cart.cartItems.reduce((total, item) => total + item.point, 0);
 export const selectDiscountCode = (state) => state.cart.discount.code;
 export const selectDiscountValue = (state) => state.cart.discount.value;
-export const selectDiscountAmount = (state) => state.cart.discount.amount;
+export const selectDiscountIsApplied = (state) => state.cart.discount.isApplied;

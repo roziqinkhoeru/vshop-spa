@@ -14,6 +14,7 @@ import {
   addItemToWishlist,
   selectWishlistItems,
 } from '../wishlist/wishlistSlice';
+import numberFormat from '../../utils/numberFormat';
 
 function ProductModal({ onClose, product }) {
   const dispatch = useDispatch();
@@ -157,7 +158,7 @@ function ProductModal({ onClose, product }) {
               <span className="text-gray-200 font-normal mx-1.5">|</span>
               {' '}
               $
-              {selectedProduct?.totalPrice.toFixed(2)}
+              {numberFormat.formatCurrency(selectedProduct?.totalPrice)}
             </button>
           </div>
         </div>
