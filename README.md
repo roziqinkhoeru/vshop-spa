@@ -44,6 +44,7 @@ Before you begin, ensure you have the following installed on your machine:
 1. Create a .env file in the root of your project.
 
    ```env
+   VITE_NODE_ENV=development
    VITE_ENCRYPTION_KEY=your_secret_key
    VITE_API_KEY=https://fakestoreapi.com/products
    ```
