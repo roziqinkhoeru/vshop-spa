@@ -85,6 +85,13 @@ export const cartSlice = createSlice({
           state.cartItems = state.cartItems.filter(
             (item) => item.id !== targetId,
           );
+          if (state.discount.isApplied) {
+            state.discount = {
+              isApplied: false,
+              code: '',
+              value: 0,
+            };
+          }
         }
       }
       saveCartToStorage(state.cartItems);

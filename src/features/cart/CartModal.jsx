@@ -54,19 +54,23 @@ function CartModal({ onClose, onCheckout }) {
     dispatch(removeItemFromCart(id));
   };
 
-  const handleDiscount = () => {
-    const code = couponCode.toUpperCase();
-    const discount = discountData.discounts.find((item) => item.code === code);
-    if (discount) {
-      dispatch(discountApply(discount));
-    } else {
-      dispatch(discountApply({ code: '', value: 0 }));
-    }
-  };
-
   const handleDiscountRemove = () => {
     dispatch(removeDiscount());
     setCouponCode('');
+  };
+
+  const handleDiscount = () => {
+    if (totalItem === 0) {
+      handleDiscountRemove();
+    } else {
+      const code = couponCode.toUpperCase();
+      const discount = discountData.discounts.find((item) => item.code === code);
+      if (discount) {
+        dispatch(discountApply(discount));
+      } else {
+        dispatch(discountApply({ code: '', value: 0 }));
+      }
+    }
   };
 
   const handleCheckout = () => {
@@ -214,7 +218,7 @@ function CartModal({ onClose, onCheckout }) {
                 className={`${discountCode === '' && isDiscountApplied ? 'stroke-red-400' : 'stroke-gray-400'} absolute top-[13px] left-4`}
               />
               <div className={`${couponCode.length > 0 && !isDiscountApplied ? 'block' : 'hidden'} absolute top-[7.5px] right-2`}>
-                <button aria-label="Apply Coupon" type="button" onClick={handleDiscount} className="bg-gray-900 text-gray-100 font-bold px-4 py-1.5 rounded-full text-center leading-normal text-sm hover:bg-lime-600 transition duration-100 ease-in-out disabled:bg-gray-400 disabled:cursor-not-allowed">Apply</button>
+                <button aria-label="Apply Coupon" type="button" onClick={handleDiscount} className="bg-gray-900 text-gray-100 font-bold px-4 py-1.5 rounded-full text-center leading-normal text-sm hover:bg-lime-600 transition duration-100 ease-in-out disabled:bg-gray-400 disabled:cursor-not-allowed" disabled={totalItem === 0}>Apply</button>
               </div>
               <div className={`${discountCode === '' && isDiscountApplied ? 'block' : 'hidden'} absolute top-3 right-3`}>
                 <button aria-label="Clear Field" type="button" onClick={handleDiscountRemove} className="bg-gray-900 text-gray-100 font-bold w-6 h-6 flex justify-center items-center rounded-full text-center leading-normal text-sm hover:bg-lime-600 transition duration-100 ease-in-out disabled:bg-gray-400 disabled:cursor-not-allowed">

@@ -11,4 +11,5 @@ export default configureStore({
     filter: filterSlice,
     wishlist: wishlistSlice,
   },
+  devTools: import.meta.env.VITE_NODE_ENV !== 'production',
 });
