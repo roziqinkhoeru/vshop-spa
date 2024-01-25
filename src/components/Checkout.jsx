@@ -2,11 +2,11 @@ import React, { useEffect, useState } from 'react';
 import ReactDOM from 'react-dom';
 import PropTypes from 'prop-types';
 import { v4 as uuidv4 } from 'uuid';
-
 import { CheckIcon, ChevronDownIcon, CircleIcon } from 'lucide-react';
 import { useDispatch, useSelector } from 'react-redux';
 import {
   clearCart,
+  removeDiscount,
   selectCartItems,
   selectDiscountValue,
   selectTotalItemCart,
@@ -59,6 +59,7 @@ function Checkout({ closeCheckout, datetime }) {
 
   const handleCheckout = () => {
     closeCheckout();
+    dispatch(removeDiscount());
     dispatch(clearCart());
   };
 
@@ -108,10 +109,14 @@ function Checkout({ closeCheckout, datetime }) {
             <p className="text-gray-400 mb-0 text-center line-through">
               $
               {numberFormat.formatCurrency(totalPrice)}
+              {' '}
+              USD
             </p>
             <h4 className="font-bold text-center text-gray-800 text-3xl">
               $
               {numberFormat.formatCurrency(totalPriceDiscount)}
+              {' '}
+              USD
             </h4>
             <div className="relative">
               <hr className="mt-4 mb-3 border-gray-200 border-dashed border-[1.5px]" />

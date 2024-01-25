@@ -75,13 +75,14 @@ function CartModal({ onClose, onCheckout }) {
 
   const handleCheckout = () => {
     if (selectTotalItemCart === 0) return;
+
     const phone = '6282314950438';
     const message = encodeURIComponent(
       `Halo Admin,\nSaya ingin melakukan checkout untuk pembelian barang-barang berikut:
-      ${cartItems?.map(
+        ${cartItems?.map(
     (product, index) => `\n[${index + 1}] ${product?.title} (*Qty: ${product?.quantity}*)`,
-  )}\n\nTotal Barang: *${totalItem}*\nSubtotal: *$${numberFormat.formatCurrency(totalPrice)} USD*\nDiskon: *$ USD* (%)\nTotal Pembelian: *$ USD*\n\nMohon bantu konfirmasi ketersediaan stok dan informasi lanjut untuk proses pembayaran. Terima kasih! 
-      `,
+  )}\n\nTotal Barang: *${totalItem}*\nSubtotal: *$${numberFormat.formatCurrency(totalPrice)} USD*\n${isDiscountApplied && discountCode !== '' ? `Diskon: *$${numberFormat.formatCurrency(discountAmount)} USD* (${discountValue}%)\n` : ''}Total Pembelian: *$${numberFormat.formatCurrency(totalPriceDiscount)} USD*\n\nMohon bantu konfirmasi ketersediaan stok dan informasi lanjut untuk proses pembayaran. Terima kasih!
+        `,
     );
     const URL_CHECKOUT = `https://api.whatsapp.com/send?phone=${phone}&text=${message}`;
     window.open(URL_CHECKOUT, '_blank');

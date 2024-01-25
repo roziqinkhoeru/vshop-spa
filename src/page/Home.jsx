@@ -1,11 +1,11 @@
 import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
 import Header from '../components/Header';
 import Checkout from '../components/Checkout';
 import Filter from '../components/Filter';
 import ProductList from '../features/producList/ProductList';
 import CartModal from '../features/cart/CartModal';
 import WishlistModal from '../features/wishlist/WishlistModal';
+import Footer from '../components/Footer';
 
 function Home() {
   const [isOpenModalCart, setIsOpenModalCart] = useState(false);
@@ -86,44 +86,7 @@ function Home() {
           onOpenFilter={handleOpenModalFilter}
         />
       </main>
-      <footer className="mt-10 bg-gray-900">
-        <div className="container max-w-7xl mx-auto px-5 sm:px-6 py-4">
-          <p className="text-center text-slate-200 text-sm">
-            &copy; 2023
-            {' '}
-            <Link
-              to="https://github.com/roziqinkhoeru/vshop-spa"
-              className="text-lime-500 hover:text-lime-600 transition duration-100 ease-in-out"
-              target="_blank"
-              rel="noopener noreferrer"
-              title="VShop github repo"
-            >
-              VShop.
-            </Link>
-            {' '}
-            Made with
-            {' '}
-            <span
-              role="img"
-              aria-label="love"
-            >
-              ❤️
-            </span>
-            {' '}
-            by
-            {' '}
-            <Link
-              to="https://github.com/roziqinkhoeru"
-              className="text-lime-500 hover:text-lime-600 transition duration-100 ease-in-out"
-              target="_blank"
-              rel="noopener noreferrer"
-              title="Khoeru Roziqin"
-            >
-              Khoeru Roziqin
-            </Link>
-          </p>
-        </div>
-      </footer>
+      <Footer />
       {isOpenModalCart ? (
         <CartModal
           onClose={handleCloseModalCart}
